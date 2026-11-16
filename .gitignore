@@ -1,0 +1,15 @@
+.DS_Store
+.scratch/
+scratch/
+tmp/
+local/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.env.*
+*.tsv
+!templates/results.tsv
+run.log
+.results/

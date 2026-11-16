@@ -1,0 +1,3 @@
+# Name skills by job; don’t split ml- vs dl- prefixes
+
+The pack’s default context is deep learning (neural training loops, gradients, overfit gates), which is a branch of ML. Dual prefixes (`ml-*` vs `dl-*`) fake a taxonomy agents don’t need and make the catalog harder to scan. Spine skills are named by job (`feedback-setup`, `train-verify`, …); modality overlays keep a short domain prefix (`cv-*`). Repo-level branding carries “ML/wisdom”; individual skills stay job-shaped.
