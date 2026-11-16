@@ -1,47 +1,133 @@
 ---
 name: train-verify
-description: Runs deep learning correctness gates before scaling training — loss at init, final-layer init, tiny-batch overfit, input-independent baseline, pre-model visualization. Use when a new training loop is written, before long runs, or when results are untrustworthy.
+description: >-
+  Runs correctness gates before scaling deep learning training (fixed seed,
+  aug off, loss at init, final-layer init, input-independent baseline, overfit
+  tiny batch, visualize tensors pre-forward, decreasing train loss). Use before
+  long trains, after pipeline changes, or when loss/metrics look wrong. Trigger
+  terms: loss at init, overfit tiny batch, train-verify, correctness gate,
+  waiver.
 license: MIT
 ---
 
-# Train verify
+# train-verify
 
-Silent failure is the default. Earn the right to train longer.
+Prove the training stack can learn **anything** before you burn GPU hours. Default context: neural nets; adapt classical ML to “model fits toy data / loss moves the right way.”
 
-Also see FSDL **memorization / overfit_batches** smoke tests and [`../../references/things-to-watch.md`](../../references/things-to-watch.md).
+Compose with HF Trainer / Ultralytics / Lightning tool skills for the actual train commands. This skill owns **gates**, not CLI flags.
 
-## Gates (each: pass or explicit human waiver)
+Reread `AGENTS-FEEDBACK.md` if present; use its eval commands when a gate needs a metric.
 
-| # | Gate | Pass criterion |
-|---|------|----------------|
-| 1 | Fixed seed | Rerun matches (or documented nondeterminism) |
-| 2 | Simplify | Aug / dropout / WD off for overfit test |
-| 3 | Loss @ init | Near analytical value (e.g. softmax ≈ `-log(1/n_classes)`) |
-| 4 | Final-layer init | Bias matches class prior / regression mean as appropriate |
-| 5 | Input-independent | Zeroed inputs worse than real inputs |
-| 6 | Overfit tiny batch | Few examples → ~minimum achievable loss; preds align with labels |
-| 7 | Pre-model viz | Decode batch **immediately before** forward |
-| 8 | Train loss ↓ | Capacity bump decreases train loss when underfitting |
+## Master gate
 
-## Steps
+**Pass**: every checklist gate below is PASS, or each failure has an explicit human **waiver** naming the gate.  
+**Fail**: any gate FAIL without waiver → do not scale batch, model, aug, or multi-GPU.
 
-1. Run gates in order; stop on fail and open `train-diagnose` if stuck.
-2. Record passes/fails/waivers (chat summary + Try log row if useful).
-3. Only then enable aug/schedules/longer training (`experiment-discipline`).
+Record results in the Try log or a short `train-verify` note in the PR.
 
-## Challenge
+## Correctness checklist
 
-- “It kind of trains” is not a pass on gate 6.
-- Do not trust LR decay defaults copied from ImageNet epoch schedules.
-- Early Adam ~3e-4 is a safe **starting** optimizer choice, not a final claim.
+Run in order. Fix and re-run from the first failure unless waived.
 
-## Completion criteria
+### 1. Fixed seed
 
-- [ ] Gate table filled (pass / fail / waiver + reason)
-- [ ] Failures have a next diagnostic action
+Set seeds for Python / NumPy / framework; note cudnn deterministic tradeoffs if any.
+
+| | |
+|--|--|
+| **Pass** | Rerun same one-step (or tiny) train → bit-similar or acceptably close loss |
+| **Fail** | Wild jump with no code change |
+| **Waiver** | Human accepts nondeterminism for this hardware path |
+
+### 2. Disable augmentation
+
+Turn off random aug, mixup, auto-augment, stochastic dropout schedules used as “aug.”
+
+| | |
+|--|--|
+| **Pass** | Train path confirmed aug-free for gates 3–7 |
+| **Fail** | Random geom/color still on |
+| **Waiver** | None for first correctness pass — re-enable only after tiny-batch overfit passes |
+
+### 3. Loss at init
+
+Before training, compute loss on a batch (or short eval).
+
+| | |
+|--|--|
+| **Pass** | Loss ≈ theoretical init (e.g. `-log(1/C)` for balanced softmax CE); within a sensible factor |
+| **Fail** | Orders of magnitude off → reduction, weights, label encoding, or head bug |
+| **Waiver** | Human documents expected init loss for a custom objective |
+
+### 4. Final-layer init
+
+Check last layer scale/bias for the loss (e.g. classification bias to prior; avoid huge initial logits).
+
+| | |
+|--|--|
+| **Pass** | Init matches recipe for this loss; gate 3 still holds |
+| **Fail** | Saturated softmax / exploding initial predictions |
+| **Waiver** | Framework default explicitly accepted |
+
+### 5. Input-independent baseline
+
+Train briefly on **same labels** but inputs replaced by noise / zeros (or shuffled inputs).
+
+| | |
+|--|--|
+| **Pass** | Cannot beat chance much; proves labels aren’t leaked into the path wrongly… wait — actually: model should **fail** to predict well; if it “learns” easily, suspect leakage or collapsed inputs |
+| **Fail** | Strong performance on nonsense inputs → leakage / bug |
+| **Waiver** | N/A for pure generative LM next-token on noise (skip with note); required for supervised discriminative tasks |
+
+Clarifying pass criteria for discriminative tasks: **pass = stays near chance**; **fail = learns well on noise**.
+
+### 6. Overfit a tiny batch
+
+Take ~1–2 batches, train until train loss → ~0 (or perfect train metric). No aug. Fixed seed.
+
+| | |
+|--|--|
+| **Pass** | Loss approaches ~0 / perfect fit in reasonable steps |
+| **Fail** | Cannot overfit → data pipe, labels, LR, grad kill, wrong tensors |
+| **Waiver** | Human accepts irreducible loss (e.g. noisy labels) with a stated floor |
+
+### 7. Visualize tensors immediately before forward
+
+Dump or plot the actual batch tensor/ Prem immediately pre-model (and labels).
+
+| | |
+|--|--|
+| **Pass** | Values/shapes look right; labels align with inputs; no silent NaN/inf |
+| **Fail** | Garbage, misaligned labels, wrong layout |
+| **Waiver** | None — fix the pipe |
+
+### 8. Decreasing train loss
+
+Short real train (aug still off or minimal): train loss trend down across steps.
+
+| | |
+|--|--|
+| **Pass** | Clear downward trend |
+| **Fail** | Flat/NaN/up — stop scaling |
+| **Waiver** | Documented non-monotonic objective with other health signals |
+
+## After all gates pass
+
+Re-enable aug and scale **one** complexity click (`experiment-discipline`). Do not open a long objective loop on a failing verify.
+
+## Challenge stance
+
+- “It’ll work at full scale” after tiny-batch fail → blocked.
+- Softmax CE init at 10+ without explanation → fail gate 3.
+- Skipping visualize because “shapes match” → fail gate 7.
+
+## Related
+
+- Traps: [`../../references/things-to-watch.md`](../../references/things-to-watch.md)
+- Init expectations: [`references/init-loss-notes.md`](references/init-loss-notes.md)
+- Data first: `data-judgment` · process: `experiment-discipline`
 
 ## Sources
 
-- [Karpathy recipe §2](https://karpathy.github.io/2019/04/25/recipe/)
-- [FSDL L3 Troubleshooting & Testing](https://fullstackdeeplearning.com/course/2022/lecture-3-troubleshooting-and-testing/)
-- [CS231n neural-networks-3](https://cs231n.github.io/neural-networks-3/)
+- Karpathy, [A Recipe for Training Neural Networks](https://karpathy.github.io/2019/04/25/recipe/) — verify loss@init; overfit tiny batch; visualize before the model.
+- Pack sources: [`../../references/sources.md`](../../references/sources.md)
