@@ -20,7 +20,7 @@ Precondition: 1–few batches, aug/dropout/WD off, enough steps.
 2. Check leakage vs true generalize fail: near-duplicates can fake “val also ↓”;
    flat val with healthy train often means capacity/regularization/data mismatch —
    but only after correctness probes pass.
-3. Slice val: one bad slice vs all flat (see `evaluate`).
+3. Slice val: one bad slice vs all flat (see `validate-results`).
 4. If train never overfit a tiny batch, this is still tree A — not a capacity problem.
 
 ## C. NaN/Inf

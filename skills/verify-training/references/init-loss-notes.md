@@ -1,6 +1,6 @@
 # Init loss notes
 
-Quick expectations for `train-verify` gate 3. Custom losses need a human-stated target.
+Quick expectations for `verify-training` gate 3. Custom losses need a human-stated target.
 
 ## Classification (softmax CE)
 

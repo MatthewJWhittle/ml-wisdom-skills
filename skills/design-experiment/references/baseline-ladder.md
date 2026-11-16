@@ -1,6 +1,6 @@
 # Baseline ladder (detail)
 
-Use with `experiment-discipline`. Each rung is a **gate**: beat it (or waive) before climbing.
+Use with `design-experiment`. Each rung is a **gate**: beat it (or waive) before climbing.
 
 | Rung | Example | Pass idea |
 |------|---------|-----------|
@@ -8,7 +8,7 @@ Use with `experiment-discipline`. Each rung is a **gate**: beat it (or waive) be
 | Linear / shallow | LogReg, linear probe, small GBM | Beats chance on val; establishes feature usefulness |
 | Simple net | Small CNN/MLP, default YOLO size, tiny Transformer | Beats linear; training dynamics healthy |
 | Human-rough | Spot labels on a fixed sample | Catches label/task misspecification |
-| Heavier / pretrained / custom SSL | Larger backbones, heavy aug, exotic pretrain | Only after lower rungs and `train-verify` |
+| Heavier / pretrained / custom SSL | Larger backbones, heavy aug, exotic pretrain | Only after lower rungs and `verify-training` |
 
 ## Classical ML
 

@@ -1,5 +1,5 @@
 ---
-name: data-judgment
+name: audit-data
 description: >-
   Audits datasets before modeling (distributions, duplicates, label noise,
   imbalance, leakage, human decision cues; for tensors/images, raw samples and
@@ -10,7 +10,7 @@ description: >-
 license: MIT
 ---
 
-# data-judgment
+# audit-data
 
 **Become one with the data** before modeling. Output a short written audit and an explicit **go / no-go** for modeling.
 
@@ -67,7 +67,7 @@ See also [`../../references/things-to-watch.md`](../../references/things-to-watc
 
 Produce a short audit (bullets fine):
 
-```text
+``text
 Task:
 Human cues:
 Raw sample notes:
@@ -77,7 +77,7 @@ Duplicates / leakage:
 Label quality:
 GO | NO-GO — rationale:
 Waivers (if any):
-```
+``
 
 **GO** only if nothing blocking remains (or each blocker has a human **waiver**).  
 **NO-GO** if leakage, broken inputs, or label chaos would make training metrics meaningless.
@@ -88,12 +88,12 @@ Waivers (if any):
 
 - “We’ll clean labels after the first big train” → no-go until a tiny trusted slice exists.
 - Stats-only comfort without viewing samples → incomplete; finish steps 2–3.
-- Chasing exotic unsupervised pretrain because labels are messy → still prefer a supervised/fine-tune baseline on a cleaned slice first (2019 recipe skepticism is softer in the foundation-model era, but the baseline ladder still comes first — see experiment-discipline).
+- Chasing exotic unsupervised pretrain because labels are messy → still prefer a supervised/fine-tune baseline on a cleaned slice first (2019 recipe skepticism is softer in the foundation-model era, but the baseline ladder still comes first — see design-experiment).
 
 ## Related
 
-- Wire how success is measured: `feedback-setup` → `AGENTS-FEEDBACK.md`
-- Before scaling train: `train-verify`
+- Wire how success is measured: `wire-feedback` → `AGENTS-FEEDBACK.md`
+- Before scaling train: `verify-training`
 - Deeper prompts: [`references/audit-prompts.md`](references/audit-prompts.md)
 
 ## Sources

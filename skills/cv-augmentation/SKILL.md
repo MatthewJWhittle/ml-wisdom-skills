@@ -6,19 +6,19 @@ license: MIT
 
 # CV augmentation
 
-**Overlay** on `train-verify` (and `data-judgment` when labels interact with geometry). Load the spine skills for overfit-batch / loss@init gates; this skill for *what* to augment and *when*. Compose with Albumentations/torchvision/Ultralytics configs — judgment here, CLI flags there.
+**Overlay** on `verify-training` (and `audit-data` when labels interact with geometry). Load the spine skills for overfit-batch / loss@init gates; this skill for *what* to augment and *when*. Compose with Albumentations/torchvision/Ultralytics configs — judgment here, CLI flags there.
 
 ## Policy (Karpathy recipe)
 
-1. **Correctness first** — augs are regularization. Pass `train-verify` gates **with augmentation off** (overfit tiny batch, visualize-before-net).
+1. **Correctness first** — augs are regularization. Pass `verify-training` gates **with augmentation off** (overfit tiny batch, visualize-before-net).
 2. **Disable for overfit-batch** — dropout, weight decay, and augs off until the batch memorizes.
 3. **Then regularize** — once the model can overfit train, add augs (and other regularizers) one family at a time.
 4. **Visualize after enable** — decode the post-aug batch with labels transformed; catch flip/box bugs early.
 
 ## Decision tree
 
-```
-train-verify failed with augs ON?
+``
+verify-training failed with augs ON?
   → turn augs OFF; re-run gates; fix pipeline/labels
 
 gates green, train overfits, val weak?
@@ -29,7 +29,7 @@ val gaps look like domain/lighting/pose?
 
 task has asymmetries (text, laterality, medical L/R)?
   → ban or constrain geometric flips/rotations
-```
+``
 
 ## Families
 

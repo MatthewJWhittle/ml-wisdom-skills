@@ -1,5 +1,5 @@
 ---
-name: objective-loop
+name: run-objective-loop
 description: >-
   Runs a scoped Karpathy-style experiment ratchet with multi-signal keep rules
   (primary improves and no guardrail fails), program.md contract, and
@@ -9,7 +9,7 @@ description: >-
 license: MIT
 ---
 
-# Objective loop
+# run-objective-loop
 
 A bounded **change → run → record → keep|reset** ratchet (Karpathy autoresearch
 mechanics) driven by a **primary signal plus guardrails**, not a single blind
@@ -25,8 +25,8 @@ Watch list: [things-to-watch](../../references/things-to-watch.md).
 | Requirement | Gate |
 |-------------|------|
 | `AGENTS-FEEDBACK.md` present and readable | **Pass** or **human waiver** (waiver must say how to run eval this loop) |
-| Training not currently “sick” | If sick, run `train-diagnose` first — **pass**/waiver before looping |
-| Goal metrics make sense | Load `evaluate` when choosing primary/guardrails |
+| Training not currently “sick” | If sick, run `diagnose-training` first — **pass**/waiver before looping |
+| Goal metrics make sense | Load `validate-results` when choosing primary/guardrails |
 
 ## 1. Scope interview (FIRST — before code edits)
 
@@ -78,9 +78,9 @@ and move on.
 
 ## 4. Keep rule (multi-signal)
 
-```
+``
 keep ⇔ primary_improved ∧ ¬any_guardrail_failed
-```
+``
 
 Primary-only wins that trip [things-to-watch](../../references/things-to-watch.md)
 items named as guardrails in `program.md` are discards. Complexity: prefer
@@ -90,9 +90,9 @@ simpler changes when primary deltas are tiny (Karpathy simplicity criterion).
 
 Header (see [template](../../templates/results.tsv)):
 
-```
+``
 commit	primary	guardrails	status	hypothesis	change	interpretation	rationale	description
-```
+``
 
 | Field | Content |
 |-------|---------|
@@ -129,4 +129,4 @@ Phrase as required behavior:
 
 Unbounded “never stop” autonomy without a stop rule when the human expects
 checkpoints; replacing project trackers; diagnosing broken training (use
-`train-diagnose`).
+`diagnose-training`).

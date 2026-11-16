@@ -28,11 +28,11 @@ Always show **pixels + labels + predictions** on the same tile.
 
 ## Write-up schema (for try log / reasoning trace)
 
-```
+``
 mode: <short name>
 count: <n>
 examples: <ids>
 attribution: data | model | aug | threshold
 next_lever: <single change>
 blocked_on: <none | labels | split | feedback>
-```
+``

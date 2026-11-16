@@ -12,4 +12,4 @@ Public Agent Skills pack for ML/DL **judgment** (not Hub/CLI tool docs).
 
 ## Catalog shape
 
-Spine skills are job-named. CV overlays use `cv-*`. Geo is out of scope for v1.
+Spine skills are **verb-named** workflow actions (`audit-data`, `verify-training`, …). CV overlays use `cv-*`. Geo is out of scope for v1.

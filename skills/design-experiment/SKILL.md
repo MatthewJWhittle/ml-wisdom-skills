@@ -1,5 +1,5 @@
 ---
-name: experiment-discipline
+name: design-experiment
 description: >-
   Enforces hypothesis-driven ML experiments, one change at a time, baseline
   ladder, and keep/discard thinking before tuning or scaling complexity. Use
@@ -9,7 +9,7 @@ description: >-
 license: MIT
 ---
 
-# experiment-discipline
+# design-experiment
 
 Run experiments like a skeptic with a lab notebook: **hypothesis → one change → measure → keep/discard**. Climb the **baseline ladder**; turn the complexity dial one click at a time.
 
@@ -36,7 +36,7 @@ Climb in order; do not skip unless waived:
 
 ### 1. Read the feedback map
 
-Open `AGENTS-FEEDBACK.md`. If missing/stale → run `feedback-setup` first.
+Open `AGENTS-FEEDBACK.md`. If missing/stale → run `wire-feedback` first.
 
 **Done when**: primary + guardrail signals are named for this experiment.
 
@@ -55,7 +55,7 @@ Write:
 
 Make a single intentional delta (LR **or** aug **or** architecture width — not all three).
 
-If debugging correctness, prefer `train-verify` gates before any tuning.
+If debugging correctness, prefer `verify-training` gates before any tuning.
 
 **Done when**: `git diff` (or equivalent) matches the claimed change.
 
@@ -64,7 +64,7 @@ If debugging correctness, prefer `train-verify` gates before any tuning.
 Stop and fix foundations instead of sweeping hyperparameters when:
 
 - Train loss does not decrease (correctness)
-- Data audit is **no-go** (`data-judgment`)
+- Data audit is **no-go** (`audit-data`)
 - Feedback too coarse to tell keep from discard
 - You are below the ladder rung you are pretending to optimize
 
@@ -95,7 +95,7 @@ Increase only one of: data complexity, model capacity, training trickiness, or o
 
 - Shared traps: [`../../references/things-to-watch.md`](../../references/things-to-watch.md)
 - Ladder detail: [`references/baseline-ladder.md`](references/baseline-ladder.md)
-- Correctness before scale: `train-verify`
+- Correctness before scale: `verify-training`
 
 ## Sources
 

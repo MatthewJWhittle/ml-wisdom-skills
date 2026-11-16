@@ -1,6 +1,6 @@
 # Data audit prompts
 
-Questions to answer in writing during `data-judgment`. Keep answers short.
+Questions to answer in writing during `audit-data`. Keep answers short.
 
 ## Human baseline
 

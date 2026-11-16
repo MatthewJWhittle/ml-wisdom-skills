@@ -17,19 +17,19 @@ A concrete, repo-local way the agent can observe training or model behavior (met
 _Avoid_: Vague "look at the results", "check TensorBoard" without a path or command
 
 **Feedback map**:
-A durable, repo-local markdown guide (working filename `AGENTS-FEEDBACK.md`) listing feedback sources, how to run them, what they inform, and recommended wiring gaps. Created/updated by `feedback-setup`; reread by other skills.
+A durable, repo-local markdown guide (working filename `AGENTS-FEEDBACK.md`) listing feedback sources, how to run them, what they inform, and recommended wiring gaps. Created/updated by `wire-feedback`; reread by other skills.
 _Avoid_: Generic observability, monitoring setup, stuffing loop goals into this file
 
 **program.md**:
-A run-specific objective-loop contract (Karpathy/autoloop convention): goal, allowed mutable surface, primary/guardrail signals, keep/discard rules, results/trace schema. Distinct from the feedback map.
+A run-specific objective-loop contract (`run-objective-loop`) (Karpathy/autoloop convention): goal, allowed mutable surface, primary/guardrail signals, keep/discard rules, results/trace schema. Distinct from the feedback map.
 _Avoid_: Putting permanent wiring-only notes only in program.md
 
 **results.tsv**:
-Append-only experiment ledger for one objective-loop run (metrics, keep/discard/crash). Usually untracked. Complements, does not replace, project tools like MLflow when those already exist.
+Append-only experiment ledger for one `run-objective-loop` run (metrics, keep/discard/crash). Usually untracked. Complements, does not replace, project tools like MLflow when those already exist.
 _Avoid_: Committing the ledger by default; forcing MLflow replacement
 
 **Try log**:
-A durable, cross-session record in the consumer repo of hypotheses tried, outcomes, and high-level decisions — survives beyond a single objective-loop run. Lives with or beside the feedback map, not only inside one `results.tsv`.
+A durable, cross-session record in the consumer repo of hypotheses tried, outcomes, and high-level decisions — survives beyond a single `run-objective-loop` run. Lives with or beside the feedback map, not only inside one `results.tsv`.
 _Avoid_: Relying on chat history as the only memory
 
 **Reasoning trace**:

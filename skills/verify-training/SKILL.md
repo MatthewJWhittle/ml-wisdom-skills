@@ -1,16 +1,16 @@
 ---
-name: train-verify
+name: verify-training
 description: >-
   Runs correctness gates before scaling deep learning training (fixed seed,
   aug off, loss at init, final-layer init, input-independent baseline, overfit
   tiny batch, visualize tensors pre-forward, decreasing train loss). Use before
   long trains, after pipeline changes, or when loss/metrics look wrong. Trigger
-  terms: loss at init, overfit tiny batch, train-verify, correctness gate,
+  terms: loss at init, overfit tiny batch, verify-training, correctness gate,
   waiver.
 license: MIT
 ---
 
-# train-verify
+# verify-training
 
 Prove the training stack can learn **anything** before you burn GPU hours. Default context: neural nets; adapt classical ML to “model fits toy data / loss moves the right way.”
 
@@ -23,7 +23,7 @@ Reread `AGENTS-FEEDBACK.md` if present; use its eval commands when a gate needs 
 **Pass**: every checklist gate below is PASS, or each failure has an explicit human **waiver** naming the gate.  
 **Fail**: any gate FAIL without waiver → do not scale batch, model, aug, or multi-GPU.
 
-Record results in the Try log or a short `train-verify` note in the PR.
+Record results in the Try log or a short `verify-training` note in the PR.
 
 ## Correctness checklist
 
@@ -111,7 +111,7 @@ Short real train (aug still off or minimal): train loss trend down across steps.
 
 ## After all gates pass
 
-Re-enable aug and scale **one** complexity click (`experiment-discipline`). Do not open a long objective loop on a failing verify.
+Re-enable aug and scale **one** complexity click (`design-experiment`). Do not open a long objective loop on a failing verify.
 
 ## Challenge stance
 
@@ -123,7 +123,7 @@ Re-enable aug and scale **one** complexity click (`experiment-discipline`). Do n
 
 - Traps: [`../../references/things-to-watch.md`](../../references/things-to-watch.md)
 - Init expectations: [`references/init-loss-notes.md`](references/init-loss-notes.md)
-- Data first: `data-judgment` · process: `experiment-discipline`
+- Data first: `audit-data` · process: `design-experiment`
 
 ## Sources
 

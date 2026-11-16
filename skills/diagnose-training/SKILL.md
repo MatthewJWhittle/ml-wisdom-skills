@@ -1,5 +1,5 @@
 ---
-name: train-diagnose
+name: diagnose-training
 description: >-
   Diagnoses sick neural training with ordered symptom trees and a fixed probe
   sequence (shapes → labels → loss → grads → optimizer). Use when loss is NaN/Inf,
@@ -10,7 +10,7 @@ description: >-
 license: MIT
 ---
 
-# Train diagnose
+# diagnose-training
 
 When training is **sick**, stop tuning. Walk symptom trees, then probes, then one
 fix. Inspired by Karpathy’s recipe, CS231n neural-networks-3, and FSDL
@@ -19,7 +19,7 @@ troubleshooting — judgment, not trainer CLI docs.
 **Gate rule:** every hard stop is **pass** or an explicit **human waiver**. Soft
 advice is not a gate.
 
-Also load `train-verify` if correctness gates (init loss, tiny-batch overfit)
+Also load `verify-training` if correctness gates (init loss, tiny-batch overfit)
 have never been run. Cross-check [things-to-watch](../../references/things-to-watch.md).
 
 ## Stance
@@ -68,7 +68,7 @@ grads through a broadcast path. See tree G.
 ## After a fix
 
 1. Re-run the **earliest failed probe**, then the original symptom check.
-2. Only then resume normal training or an `objective-loop`.
+2. Only then resume normal training or a `run-objective-loop`.
 3. Log briefly in the Try log if `AGENTS-FEEDBACK.md` exists (hypothesis → evidence → fix).
 
 ## Out of scope

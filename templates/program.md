@@ -1,6 +1,6 @@
 # program.md — objective loop contract
 
-Fill before starting an `objective-loop`. One objective per file/run.
+Fill before starting a `run-objective-loop`. One objective per file/run.
 
 ## Goal
 

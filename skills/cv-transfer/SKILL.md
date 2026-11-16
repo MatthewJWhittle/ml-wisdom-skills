@@ -6,7 +6,7 @@ license: MIT
 
 # CV transfer learning
 
-**Overlay** on `train-verify` and `experiment-discipline`. Load spines for correctness gates and one-change-at-a-time experiments; this skill for backbone/finetune policy. Compose with Hub/Ultralytics/torchvision weight loaders — do not invent exotic towers before a standard pretrained baseline works (“don’t be a hero,” [Karpathy recipe](https://karpathy.github.io/2019/04/25/recipe/)).
+**Overlay** on `verify-training` and `design-experiment`. Load spines for correctness gates and one-change-at-a-time experiments; this skill for backbone/finetune policy. Compose with Hub/Ultralytics/torchvision weight loaders — do not invent exotic towers before a standard pretrained baseline works (“don’t be a hero,” [Karpathy recipe](https://karpathy.github.io/2019/04/25/recipe/)).
 
 Canonical framing: [CS231n transfer learning](https://cs231n.github.io/transfer-learning/).
 
@@ -27,20 +27,20 @@ Canonical framing: [CS231n transfer learning](https://cs231n.github.io/transfer-
 
 ## Freeze → unfreeze recipe
 
-```
+``
 1. Replace head for task; freeze backbone
 2. Train head to stability (higher LR on head)
 3. Unfreeze top blocks or full backbone
 4. Finetune with lower LR on backbone than head
 5. Only then try architecture heroics
-```
+``
 
 Details: [references/finetune-recipe.md](references/finetune-recipe.md).
 
 ## LR & init tips
 
 - Random **head** LR ≫ finetuned **backbone** LR (CS231n practical advice).
-- Verify loss@init after attaching a new head (`train-verify`).
+- Verify loss@init after attaching a new head (`verify-training`).
 - Watch BN: freeze-BN vs train-BN is a deliberate choice under small batches / domain shift.
 
 ## Domain shift checks

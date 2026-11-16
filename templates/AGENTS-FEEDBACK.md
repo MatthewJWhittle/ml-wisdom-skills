@@ -1,6 +1,6 @@
 # AGENTS-FEEDBACK
 
-Repo-local **feedback map**: how an agent observes whether an experiment worked. Created/updated by `feedback-setup`. Other judgment skills reread this file; they do not invent wiring.
+Repo-local **feedback map**: how an agent observes whether an experiment worked. Created/updated by `wire-feedback`. Other judgment skills reread this file; they do not invent wiring.
 
 > Not an objective-loop contract. Loop runs use `program.md` + `results.tsv` separately.
 

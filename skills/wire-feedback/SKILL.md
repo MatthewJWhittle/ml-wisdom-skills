@@ -1,5 +1,5 @@
 ---
-name: feedback-setup
+name: wire-feedback
 description: >-
   Inventories how a consumer repo observes experiment success and writes or
   updates AGENTS-FEEDBACK.md (feedback map + Try log). Use when starting ML/DL
@@ -9,7 +9,7 @@ description: >-
 license: MIT
 ---
 
-# feedback-setup
+# wire-feedback
 
 Creator skill: build the **feedback map** so later judgment and loops have something real to read. Do **not** train models or run objective loops here.
 
@@ -76,7 +76,7 @@ Add gap bullets when, for example:
 
 ### 5. Stop
 
-Do **not** start `program.md` / `results.tsv` objective loops from this skill. Point humans/agents to `experiment-discipline` + an objective-loop skill when wiring is ready.
+Do **not** start `program.md` / `results.tsv` objective loops from this skill. Point humans/agents to `design-experiment` + a `run-objective-loop` skill when wiring is ready.
 
 ## Try log schema
 

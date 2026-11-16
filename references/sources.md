@@ -11,7 +11,7 @@ Enduring ML/DL judgment this pack cites. Prefer primary sources; skill bodies ke
 ## Nuance (post-2019)
 
 - Unsupervised / self-supervised pretraining skepticism in the 2019 recipe is **more nuanced in 2024+**: foundation models and SSL often win when labeled data is scarce. Still: do **not** chase exotic unsupervised schemes before a supervised (or fine-tune) baseline and a working feedback map.
-- Autoresearch / objective-loop patterns: keep a durable try log and explicit mutable surface; do not reduce judgment to a single blind metric.
+- Autoresearch / run-objective-loop patterns: keep a durable try log and explicit mutable surface; do not reduce judgment to a single blind metric.
 
 ## Compose with (tool skills, not this repo)
 

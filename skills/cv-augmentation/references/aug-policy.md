@@ -3,7 +3,7 @@
 ## Order of operations
 
 1. Fix labels and splits (`cv-data-quality`).
-2. Skeleton + overfit batch with **no** aug (`train-verify`).
+2. Skeleton + overfit batch with **no** aug (`verify-training`).
 3. Overfit full train with capacity (still mild/no aug if needed).
 4. Add geometric → photometric → cutout/mix — **one change per experiment** when diagnosing.
 5. Re-check critical slices after each family lands.

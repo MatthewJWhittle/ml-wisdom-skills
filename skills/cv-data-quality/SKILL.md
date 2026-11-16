@@ -6,7 +6,7 @@ license: MIT
 
 # CV data quality
 
-**Overlay** on `data-judgment`. Load **both**: spine for splits, sampling, and label-process gates; this skill for vision-specific failure modes. Compose with tool skills (datasets CLIs, YOLO/label viewers) — do not re-document them.
+**Overlay** on `audit-data`. Load **both**: spine for splits, sampling, and label-process gates; this skill for vision-specific failure modes. Compose with tool skills (datasets CLIs, YOLO/label viewers) — do not re-document them.
 
 Applies to still images and short video treated as frames. Goal: *become one with the data* before touching the net ([Karpathy recipe](https://karpathy.github.io/2019/04/25/recipe/); CS231n data hygiene).
 
@@ -46,7 +46,7 @@ See [references/visualization-checklist.md](references/visualization-checklist.m
 
 - Documented findings (counts + examples) and either fixes or explicit waivers.
 - Train/val/test near-dup policy stated.
-- Spine `data-judgment` split/label gates still satisfy.
+- Spine `audit-data` split/label gates still satisfy.
 
 ## Out of scope
 
