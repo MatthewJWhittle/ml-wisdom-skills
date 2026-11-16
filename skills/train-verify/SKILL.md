@@ -71,15 +71,13 @@ Check last layer scale/bias for the loss (e.g. classification bias to prior; avo
 
 ### 5. Input-independent baseline
 
-Train briefly on **same labels** but inputs replaced by noise / zeros (or shuffled inputs).
+For supervised discriminative tasks: train briefly on **same labels** with inputs replaced by noise / zeros (or shuffled inputs).
 
 | | |
 |--|--|
-| **Pass** | Cannot beat chance much; proves labels aren’t leaked into the path wrongly… wait — actually: model should **fail** to predict well; if it “learns” easily, suspect leakage or collapsed inputs |
-| **Fail** | Strong performance on nonsense inputs → leakage / bug |
-| **Waiver** | N/A for pure generative LM next-token on noise (skip with note); required for supervised discriminative tasks |
-
-Clarifying pass criteria for discriminative tasks: **pass = stays near chance**; **fail = learns well on noise**.
+| **Pass** | Stays near chance — model does **not** learn well on nonsense inputs |
+| **Fail** | Strong performance on noise/shuffle → leakage, collapsed inputs, or label bug |
+| **Waiver** | Skip with note for pure generative LM next-token-on-noise; required for discriminative tasks |
 
 ### 6. Overfit a tiny batch
 
