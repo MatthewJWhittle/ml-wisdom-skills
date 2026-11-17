@@ -150,11 +150,13 @@ From product discussion after the survey:
 5. **Warn, don’t block** — readiness recommendations, not a hard stop on other work.
 6. **Name leaning:** `audit-repo` (still confirm at implement time).
 
-## Still open
+## Still open → simple defaults (2026-11-17)
 
-1. **Default loop posture:** Consumer default = bounded stop even though Karpathy/Orchestra say “never stop”?
-2. **Write policy:** Chat-only report vs also `AGENT-READINESS.md` (avoid bloating `AGENTS-FEEDBACK.md`)?
-3. **Catalog pressure:** Ship `audit-repo` before or after `design-loss` / `choose-architecture`?
+Keep v1 simple; revisit only if real use demands more.
+
+1. **Loop posture:** Prefer **bounded** stop for consumer repos (N tries / wall clock). Unattended “never stop” only when the human explicitly opts in.
+2. **Write policy:** **Chat report only** for now — no `AGENT-READINESS.md`. Do not bloat `AGENTS-FEEDBACK.md`.
+3. **Catalog:** **Defer shipping `audit-repo`** (and `design-loss` / `choose-architecture`) until we choose to implement; research notes are enough. When we ship, keep the skill thin: warn + recommend + optional safe probes.
 
 ## Sources checked (paths / URLs)
 
