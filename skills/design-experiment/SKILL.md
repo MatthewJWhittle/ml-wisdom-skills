@@ -72,14 +72,14 @@ Stop and fix foundations instead of sweeping hyperparameters when:
 
 ### 5. Run, record, keep/discard
 
-Measure via the feedback map. Append the **Try log** in `AGENTS-FEEDBACK.md`.
+Measure via the feedback map. Append an entry to `EXPERIMENTS.md` (not `AGENTS-FEEDBACK.md`).
 
 - **Keep**: land the change; note why signals support it
 - **Discard**: revert; note what you learned
 
 For autonomous ratchets, point to an **objective loop** with `program.md` + `results.tsv` (goal, mutable surface, keep rules, append-only ledger). This skill sets discipline; the loop skill executes the ratchet.
 
-**Done when**: Try log row exists; working tree matches keep/discard decision.
+**Done when**: `EXPERIMENTS.md` entry exists; working tree matches keep/discard decision.
 
 ## Complexity dial
 

@@ -47,7 +47,8 @@ Templates live in [`templates/`](templates/).
 
 | File | Role |
 |------|------|
-| `AGENTS-FEEDBACK.md` | Standing feedback map + Try log |
+| `AGENTS-FEEDBACK.md` | Router/config: sources, trackers, skill map |
+| `EXPERIMENTS.md` | Append-only experiment log |
 | `program.md` | One objective-loop contract |
 | `results.tsv` | Per-run ledger + reasoning fields |
 

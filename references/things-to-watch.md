@@ -28,5 +28,5 @@ Shared failure modes for ML/DL judgment skills. Use as a scan list when a gate f
 
 - Metrics too coarse to discriminate keep/discard
 - Plots/scripts missing for the modality (e.g. CV with numbers only)
-- Chat history as the only try log
+- Chat history as the only experiment log
 - Soft gates with no pass criteria and no human waiver path

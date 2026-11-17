@@ -2,7 +2,7 @@
 
 Round-6 decisions locked for the first public cut:
 
-1. **Try log** lives in `AGENTS-FEEDBACK.md` (section); run-objective-loop appends a condensed entry when a loop ends. Dense per-run rows stay in `results.tsv`.
+1. **Experiment log** lives in `EXPERIMENTS.md`; `AGENTS-FEEDBACK.md` is router/config only (see ADR 0009). `run-objective-loop` appends a condensed entry to `EXPERIMENTS.md` when a loop ends. Dense per-run rows stay in `results.tsv`.
 2. **Reasoning trace** is first-class: each `results.tsv` row includes hypothesis, change, interpretation, and keep/discard rationale.
 3. **Scope interview** before any objective loop: mutable surface, hard bans, work on a branch, ask before destructive or out-of-scope edits.
 4. **`results.tsv` is the universal agent ledger**; mirror to MLflow/W&B/etc. when the feedback map says a tracker exists.

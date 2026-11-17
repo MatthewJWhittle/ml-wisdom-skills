@@ -23,7 +23,7 @@ Reread `AGENTS-FEEDBACK.md` if present; use its eval commands when a gate needs 
 **Pass**: every checklist gate below is PASS, or each failure has an explicit human **waiver** naming the gate.  
 **Fail**: any gate FAIL without waiver → do not scale batch, model, aug, or multi-GPU.
 
-Record results in the Try log or a short `verify-training` note in the PR.
+Record results in `EXPERIMENTS.md` or a short `verify-training` note in the PR.
 
 ## Correctness checklist
 

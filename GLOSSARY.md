@@ -17,8 +17,12 @@ A concrete, repo-local way the agent can observe training or model behavior (met
 _Avoid_: Vague "look at the results", "check TensorBoard" without a path or command
 
 **Feedback map**:
-A durable, repo-local markdown guide (working filename `AGENTS-FEEDBACK.md`) listing feedback sources, how to run them, what they inform, and recommended wiring gaps. Created/updated by `wire-feedback`; reread by other skills.
-_Avoid_: Generic observability, monitoring setup, stuffing loop goals into this file
+A short repo-local **router/config** (working filename `AGENTS-FEEDBACK.md`): feedback source commands, holdouts, trackers, gaps, skill routing, and the path to the experiment log. Created/updated by `wire-feedback`; reread by other skills.
+_Avoid_: Generic observability; stuffing experiment narratives or loop goals into this file
+
+**Experiment log**:
+An append-only markdown record (working filename `EXPERIMENTS.md`) of hypotheses tried, signals, and decisions across sessions. Separate from the feedback map and from `results.tsv`.
+_Avoid_: Try log (deprecated name); dumping runs into `AGENTS-FEEDBACK.md`; relying on chat history as the only memory
 
 **program.md**:
 A run-specific objective-loop contract (`run-objective-loop`) (Karpathy/autoloop convention): goal, allowed mutable surface, primary/guardrail signals, keep/discard rules, results/trace schema. Distinct from the feedback map.
@@ -26,11 +30,7 @@ _Avoid_: Putting permanent wiring-only notes only in program.md
 
 **results.tsv**:
 Append-only experiment ledger for one `run-objective-loop` run (metrics, keep/discard/crash). Usually untracked. Complements, does not replace, project tools like MLflow when those already exist.
-_Avoid_: Committing the ledger by default; forcing MLflow replacement
-
-**Try log**:
-A durable, cross-session record in the consumer repo of hypotheses tried, outcomes, and high-level decisions — survives beyond a single `run-objective-loop` run. Lives with or beside the feedback map, not only inside one `results.tsv`.
-_Avoid_: Relying on chat history as the only memory
+_Avoid_: Committing the ledger by default; forcing MLflow replacement; using it as the only human-readable history (also write `EXPERIMENTS.md`)
 
 **Reasoning trace**:
 Per-experiment (or per-keep) notes the agent writes: hypothesis, what changed, how signals were interpreted, why keep/discard — so a human can reconstruct how score moved across many runs and code changes.

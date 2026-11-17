@@ -1,24 +1,37 @@
 ---
 name: wire-feedback
 description: >-
-  Inventories how a consumer repo observes experiment success and writes or
-  updates AGENTS-FEEDBACK.md (feedback map + Try log). Use when starting ML/DL
-  work in a repo, before objective loops, when feedback wiring is missing or
-  stale, or when an agent cannot tell keep from discard. Trigger terms:
-  feedback map, AGENTS-FEEDBACK, feedback sources, Try log, wiring gaps.
+  Inventories how a consumer repo observes experiment success and writes
+  AGENTS-FEEDBACK.md as a short router/config (sources, trackers, skill map)
+  plus scaffolds EXPERIMENTS.md for the append-only experiment log. Use when
+  starting ML/DL work, before objective loops, when feedback wiring is missing
+  or stale, or when agents are dumping run notes into AGENTS-FEEDBACK. Trigger
+  terms: feedback map, AGENTS-FEEDBACK, EXPERIMENTS.md, experiment log, wiring.
 license: MIT
 ---
 
 # wire-feedback
 
-Creator skill: build the **feedback map** so later judgment and loops have something real to read. Do **not** train models or run objective loops here.
+Creator skill: build **config + experiment log scaffolding** so later judgment has somewhere real to read and write.
 
-Compose with HF / Ultralytics / MLflow **tool** skills for how to invoke trackers; this skill decides **what this repo observes**.
+- **`AGENTS-FEEDBACK.md`** — short, stable **router/config** (how to observe; where to log; which skill next).
+- **`EXPERIMENTS.md`** — append-only **experiment log** (what was tried).
 
-## Gate: inventory complete → map written
+Do **not** train models, run objective loops, or append experiment narratives into `AGENTS-FEEDBACK.md`.
 
-**Pass**: `AGENTS-FEEDBACK.md` exists at the consumer project root, lists runnable feedback sources, holdouts, trackers, gaps, and a Try log section.  
-**Waiver**: human explicitly accepts “no map yet” in writing (rare; blocks autonomous loops).
+Compose with HF / Ultralytics / MLflow **tool** skills for tracker CLIs; this skill decides **what this repo observes** and **where notes go**.
+
+Templates: [`../../templates/AGENTS-FEEDBACK.md`](../../templates/AGENTS-FEEDBACK.md), [`../../templates/EXPERIMENTS.md`](../../templates/EXPERIMENTS.md).
+
+## Gate: config + log scaffolded
+
+**Pass**:
+
+1. `AGENTS-FEEDBACK.md` at repo root lists runnable feedback sources, holdouts, trackers, gaps, experiment-log path, and skill router.
+2. `EXPERIMENTS.md` exists (may be empty aside from the header/template).
+3. `AGENTS-FEEDBACK.md` does **not** contain a growing dump of run narratives.
+
+**Waiver**: human explicitly accepts “no map yet” (blocks autonomous loops).
 
 ## Steps
 
@@ -28,15 +41,14 @@ Find concrete **feedback sources** (commands, scripts, paths — not vibes):
 
 - Eval / test entrypoints and CI jobs that score models
 - Metric logs (CSV, JSON, stdout conventions)
-- Plot / visualization scripts (curves, confusion, sample grids)
+- Plot / visualization scripts
 - Holdout / test sets and split definitions
 - Existing trackers: MLflow, W&B, TensorBoard, or **none**
+- Any existing experiment notes (migrate out of `AGENTS-FEEDBACK.md` if agents already dumped there)
 
-**Done when**: you can name each source with a runnable invocation or an honest “missing.”
+**Done when**: each source has a runnable invocation or an honest “missing.”
 
 ### 2. Classify each source
-
-For every source, record:
 
 | Field | Question |
 |-------|----------|
@@ -45,60 +57,57 @@ For every source, record:
 | Role | **Primary signal** vs **guardrail signal** |
 | Gaps | Too coarse? No plot? No holdout? |
 
-Challenge coarse-only metrics (e.g. single accuracy with no slice, CV with numbers and no image grid).
+**Done when**: every discovered source has a row; unknowns are gaps, not guesses.
 
-**Done when**: every discovered source has a row; unknowns are listed as gaps, not guessed.
+### 3. Write or update `AGENTS-FEEDBACK.md` (config only)
 
-### 3. Write or update `AGENTS-FEEDBACK.md`
-
-Use the template at [`../../templates/AGENTS-FEEDBACK.md`](../../templates/AGENTS-FEEDBACK.md). Prefer updating in place over rewriting history out of the Try log.
+Use the template. Keep it **short**.
 
 Must include:
 
-1. **Feedback sources** table (runnable)
-2. **Holdouts & splits**
-3. **Trackers** (integrate; do not replace working MLflow/W&B)
-4. **Recommended gaps** (actionable)
-5. **Try log** section with the schema below
+1. Pointer to **`EXPERIMENTS.md`** (or alternate path if the repo prefers)
+2. **Skill router** table (situations → skills)
+3. **Feedback sources** table
+4. **Holdouts & splits**
+5. **Trackers** (register against existing; don’t replace)
+6. **Recommended gaps**
 
-**Done when**: a stranger agent can run at least one primary signal from the file alone.
+If the file already has a fat “Try log” / narrative dump: **move** those entries into `EXPERIMENTS.md` and leave a one-line pointer behind.
 
-### 4. Recommend missing feedback
+**Done when**: a stranger agent can run at least one primary signal from the config alone, and knows where to append experiment notes.
 
-Add gap bullets when, for example:
+### 4. Scaffold `EXPERIMENTS.md`
 
-- Computer vision / detection without a plot or sample-grid script
-- Metrics too coarse to discriminate keep/discard
-- No held-out set or leakage policy written down
-- Tracker exists but the agent has no register/read command
+Create from template if missing. Do not invent fake historical experiments.
 
-**Done when**: gaps are specific (“add `scripts/plot_preds.py` for 16-val grid”), not “improve observability.”
+**Done when**: file exists with the entry template visible.
 
-### 5. Stop
+### 5. Recommend missing feedback
 
-Do **not** start `program.md` / `results.tsv` objective loops from this skill. Point humans/agents to `design-experiment` + a `run-objective-loop` skill when wiring is ready.
+Gaps must be specific (“add `scripts/plot_preds.py` for 16-val grid”), not “improve observability.”
 
-## Try log schema
+### 6. Stop
 
-Append-only rows in `AGENTS-FEEDBACK.md` (durable across sessions):
+Point to `design-experiment` / `run-objective-loop` when wiring is ready. Logging of actual tries is done by those skills into **`EXPERIMENTS.md`**.
 
-| Date | Hypothesis | Change (mutable surface) | Signals | Keep/Discard | Notes |
-|------|------------|--------------------------|---------|--------------|-------|
+## Experiment log (other skills write here)
 
-Chat history is not a Try log.
+Schema lives in [`../../templates/EXPERIMENTS.md`](../../templates/EXPERIMENTS.md). Chat history is not an experiment log. `results.tsv` remains the dense ledger for one objective-loop run.
 
 ## Challenge stance
 
+- Dumping hypotheses/results into `AGENTS-FEEDBACK.md` → reject; move to `EXPERIMENTS.md`.
 - “We’ll just look at TensorBoard” without a path/command → reject; write a source row or a gap.
+- Replacing a working tracker with a parallel shadow system → reject; register against it.
 - Stuffing loop goals into the feedback map → reject; loops use `program.md` + `results.tsv`.
-- Replacing an existing tracker with a parallel shadow system → reject; register against it.
 
 ## Related
 
-- Shared traps: [`../../references/things-to-watch.md`](../../references/things-to-watch.md)
-- Deeper checklist: [`references/inventory-checklist.md`](references/inventory-checklist.md)
+- [`../../references/things-to-watch.md`](../../references/things-to-watch.md)
+- [`references/inventory-checklist.md`](references/inventory-checklist.md)
 
 ## Sources
 
-- Karpathy, [A Recipe for Training Neural Networks](https://karpathy.github.io/2019/04/25/recipe/) — visualize and measure before scaling complexity.
-- Pack sources index: [`../../references/sources.md`](../../references/sources.md)
+- Karpathy, [A Recipe for Training Neural Networks](https://karpathy.github.io/2019/04/25/recipe/)
+- Karpathy [autoresearch](https://github.com/karpathy/autoresearch) — separate contract (`program.md`) from history (`results.tsv`)
+- [`../../references/sources.md`](../../references/sources.md)

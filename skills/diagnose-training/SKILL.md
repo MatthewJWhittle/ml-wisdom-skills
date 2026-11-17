@@ -69,7 +69,7 @@ grads through a broadcast path. See tree G.
 
 1. Re-run the **earliest failed probe**, then the original symptom check.
 2. Only then resume normal training or a `run-objective-loop`.
-3. Log briefly in the Try log if `AGENTS-FEEDBACK.md` exists (hypothesis → evidence → fix).
+3. Log briefly in `EXPERIMENTS.md` (hypothesis → evidence → fix).
 
 ## Out of scope
 

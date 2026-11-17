@@ -38,7 +38,8 @@ Consumer artifacts:
 
 | Artifact | Role |
 |----------|------|
-| `AGENTS-FEEDBACK.md` | Durable wiring + Try log + proposals |
+| `AGENTS-FEEDBACK.md` | Router/config: wiring, trackers, skill map |
+| `EXPERIMENTS.md` | Durable experiment log |
 | `program.md` | One objective-loop contract + mutable surface |
 | `results.tsv` | Agent-readable ledger + reasoning trace fields |
 

@@ -108,11 +108,12 @@ commit	primary	guardrails	status	hypothesis	change	interpretation	rationale	desc
 
 Usually **untracked**. Every attempt gets a row — including failures.
 
-## 6. Loop end → Try log
+## 6. Loop end → experiment log
 
-Append a **condensed** entry to the Try log section of `AGENTS-FEEDBACK.md`
-(date, hypothesis, change, outcome, decision, link to results/run). Dense history
-stays in `results.tsv`.
+Append a **condensed** entry to `EXPERIMENTS.md` (path from `AGENTS-FEEDBACK.md`
+if overridden). Use the entry template there (hypothesis, change, signals,
+decision, link to `results.tsv`/tracker). Dense history stays in `results.tsv`.
+Do **not** append narratives to `AGENTS-FEEDBACK.md`.
 
 ## 7. ML-iteration safety (hard)
 
