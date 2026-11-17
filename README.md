@@ -41,6 +41,12 @@ npx skills add MatthewJWhittle/ml-wisdom-skills --skill verify-training
 | [`cv-transfer`](skills/cv-transfer/SKILL.md) | Transfer / fine-tune judgment |
 | [`cv-error-analysis`](skills/cv-error-analysis/SKILL.md) | FP/FN grids, slices, next action |
 
+### Utilities
+
+| Skill | When |
+|-------|------|
+| [`list-skills`](skills/list-skills/SKILL.md) | “What skills?” / which to run next (thin router) |
+
 ## Consumer artifacts
 
 Templates live in [`templates/`](templates/).

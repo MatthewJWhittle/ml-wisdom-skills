@@ -15,6 +15,7 @@ Suggested next skill by situation (judgment pack):
 
 | Situation | Skill |
 |-----------|--------|
+| “What skills / where do I start?” | `list-skills` |
 | Feedback wiring missing/stale | `wire-feedback` |
 | New/changed data or labels | `audit-data` (+ `cv-data-quality` for vision) |
 | Planning a run / many knobs | `design-experiment` |
