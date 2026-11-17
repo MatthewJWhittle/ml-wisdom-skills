@@ -87,32 +87,43 @@ wire-feedback | audit-data | verify-training | …
 
 | Level | Meaning |
 |-------|---------|
-| **blocker** | Do not start `run-objective-loop` / cloud jobs |
-| **warn** | Proceed only with human acknowledgment |
+| **warn** | Proceed with eyes open; human should acknowledge (default “hard” level — **do not hard-block**) |
 | **info** | Nice-to-have / compose with tool packs |
 | **pass** | Category satisfied |
 
-Overall: `NOT_READY` if any blocker; `READY_WITH_WAIVERS` if blockers waived by named human notes; `READY` if no blockers.
+Overall: `READY` / `READY_WITH_WARNINGS` / `NEEDS_SETUP`. This is a **readiness + recommendation** skill, not a gate that forbids work. Prefer warnings and next-skill pointers over `blocker` language.
+
+### Probes (allowed when safe)
+
+Audit may run **cheap probes** when they are safe and informative (e.g. import check, one-batch CPU dry-run, metric file parse, tiny local eval). Prefer **local** probes when the repo supports them (faster feedback).
+
+**Remote / expensive compute is allowed only when:**
+
+1. That is the repo’s normal convention (documented in `AGENTS-FEEDBACK.md` or equivalent), **or**
+2. The human has granted permission for this audit session.
+
+Record the permission (or “repo convention: remote-only”) in the report and, when setup runs, in the feedback config (e.g. `compute.default = local|remote`, `remote.submit_requires = ask|allowed`). Never surprise-submit cloud/GPU jobs.
 
 ### Relationship to `wire-feedback`
 
 | | `audit-repo` | `wire-feedback` |
 |--|--------------|-----------------|
-| Mode | **Read-only audit** | **Creator / setup** |
-| Writes | Report only (optional note in chat); must not invent fake feedback sources | Writes `AGENTS-FEEDBACK.md`, scaffolds `EXPERIMENTS.md` |
+| Mode | **Audit + optional safe probes** | **Creator / setup** |
+| Writes | Readiness report (prefer not to bloat `AGENTS-FEEDBACK.md`); may record compute permission/convention notes | Writes `AGENTS-FEEDBACK.md`, scaffolds `EXPERIMENTS.md`; **ask compute preference** (local-first vs remote-convention) |
 | When | First touch; before loops; after major repo change | When wiring missing/stale; after audit says “feedback missing” |
 | Hand-off | “Missing map → run `wire-feedback`” | “Wiring ready → `design-experiment` / `verify-training` / `run-objective-loop`” |
 
-Do **not** fold audit into `wire-feedback`: agents need a cheap go/no-go that does not mutate the repo.
+Do **not** fold audit into `wire-feedback`: agents need a cheap readiness pass that does not own the full wiring write.
 
 ### What it must NOT do
 
-- Submit HF Jobs / SLURM / cloud GPU pods
-- Start `run-objective-loop` or overnight “never stop” autonomy
+- Surprise-submit HF Jobs / SLURM / cloud GPU pods without recorded permission or documented repo convention
+- Start `run-objective-loop` or overnight “never stop” autonomy as part of the audit
 - Install packages or rewrite training code “to help”
-- Replace `ml-env-probe` / VRAM estimators (point at them)
+- Replace `ml-env-probe` / VRAM estimators (point at them; may invoke as compose)
 - Duplicate production serving readiness (`deployment-readiness-for-ml`)
 - Claim cost/compliance/safety guarantees (compose with preflight/FinOps skills for numbers)
+- **Hard-block** the human/agent from continuing — warn and recommend instead
 
 ## Local pack overlap (already owned)
 
@@ -128,14 +139,22 @@ Primary: https://github.com/karpathy/autoresearch/blob/master/program.md
 
 Assumes: tiny editable surface (`train.py` only); immutable eval in `prepare.py`; fixed 5‑min budget; redirect logs + `grep` metrics; untracked `results.tsv`; dedicated branch; timeout kill. Consumer repos rarely have this contract *pre-declared* — that is exactly what readiness audit should detect (present / partial / missing).
 
-## Open questions for the human
+## Locked decisions (2026-11-17)
 
-1. **Default loop posture:** Consumer default = bounded stop (N tries / wall clock) even though Karpathy/Orchestra say “never stop”?
-2. **Write policy:** Pure report in chat vs also write `AGENT-READINESS.md` (or a section under `AGENTS-FEEDBACK.md`)? Prefer not to bloat the feedback router.
-3. **Cloud depth:** Soft checklist (“human must approve HF Jobs”) vs requiring a declared spend cap file?
-4. **Name:** Confirm `audit-repo` vs `preflight-loop`.
-5. **Scope v1:** Spine-only (framework-agnostic) — defer YOLO Platform / HF Jobs specifics to “compose with” links?
-6. **Catalog pressure:** Ship `audit-repo` before or after `design-loss` / `choose-architecture`?
+From product discussion after the survey:
+
+1. **Probes OK** when safe; prefer local for speed when possible.
+2. **Not local-only** — remote is fine if that is how the repo works.
+3. **Remote submit = explicit** — clear to the human; record as permission for this session **or** as repo convention in setup/`AGENTS-FEEDBACK`.
+4. **`wire-feedback` asks** compute preference (local-first vs remote-convention) when wiring.
+5. **Warn, don’t block** — readiness recommendations, not a hard stop on other work.
+6. **Name leaning:** `audit-repo` (still confirm at implement time).
+
+## Still open
+
+1. **Default loop posture:** Consumer default = bounded stop even though Karpathy/Orchestra say “never stop”?
+2. **Write policy:** Chat-only report vs also `AGENT-READINESS.md` (avoid bloating `AGENTS-FEEDBACK.md`)?
+3. **Catalog pressure:** Ship `audit-repo` before or after `design-loss` / `choose-architecture`?
 
 ## Sources checked (paths / URLs)
 
