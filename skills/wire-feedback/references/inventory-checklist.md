@@ -1,6 +1,6 @@
 # Feedback inventory checklist
 
-Use while scanning a consumer repo for `feedback-setup`.
+Use while scanning a consumer repo for `wire-feedback`.
 
 ## Commands & scripts
 

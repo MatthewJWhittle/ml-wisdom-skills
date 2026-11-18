@@ -1,3 +1,7 @@
-# Name skills by job; don’t split ml- vs dl- prefixes
+# Name spine skills as verbs; don’t split ml- vs dl- prefixes
 
-The pack’s default context is deep learning (neural training loops, gradients, overfit gates), which is a branch of ML. Dual prefixes (`ml-*` vs `dl-*`) fake a taxonomy agents don’t need and make the catalog harder to scan. Spine skills are named by job (`feedback-setup`, `train-verify`, …); modality overlays keep a short domain prefix (`cv-*`). Repo-level branding carries “ML/wisdom”; individual skills stay job-shaped.
+The pack’s default context is deep learning (neural training loops, gradients, overfit gates), which is a branch of ML. Dual prefixes (`ml-*` vs `dl-*`) fake a taxonomy agents don’t need.
+
+Spine skills are named as **workflow verbs** so humans and agents can invoke them as tasks (`wire-feedback`, `audit-data`, `design-experiment`, `verify-training`, `diagnose-training`, `validate-results`, `run-objective-loop`). Modality overlays keep a short domain prefix (`cv-*`). Repo-level branding carries “ML/wisdom.”
+
+Supersedes the earlier “job-shaped noun” wording in this ADR’s first version; see ADR 0008.

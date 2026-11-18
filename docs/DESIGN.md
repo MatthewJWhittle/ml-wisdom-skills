@@ -20,23 +20,26 @@ Coding agents can write a PyTorch loop. They struggle to design valid experiment
 
 ## Architecture
 
+Spine skills are **verb-shaped** (workflow actions). CV overlays stay domain-prefixed.
+
 ```
-spine (cross-cutting)          overlays
+spine (verbs)                 overlays
 ─────────────────────          ────────
-feedback-setup                 cv-data-quality
-data-judgment                  cv-augmentation
-experiment-discipline          cv-transfer
-train-verify                   cv-error-analysis
-train-diagnose
-evaluate
-objective-loop
+wire-feedback                  cv-data-quality
+audit-data                     cv-augmentation
+design-experiment              cv-transfer
+verify-training                cv-error-analysis
+diagnose-training
+validate-results
+run-objective-loop
 ```
 
 Consumer artifacts:
 
 | Artifact | Role |
 |----------|------|
-| `AGENTS-FEEDBACK.md` | Durable wiring + Try log + proposals |
+| `AGENTS-FEEDBACK.md` | Router/config: wiring, trackers, skill map |
+| `EXPERIMENTS.md` | Durable experiment log |
 | `program.md` | One objective-loop contract + mutable surface |
 | `results.tsv` | Agent-readable ledger + reasoning trace fields |
 

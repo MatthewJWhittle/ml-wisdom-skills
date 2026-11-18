@@ -1,6 +1,6 @@
 # program.md — objective loop contract
 
-Fill before starting an `objective-loop`. One objective per file/run.
+Fill before starting a `run-objective-loop`. One objective per file/run.
 
 ## Goal
 
@@ -30,4 +30,4 @@ Fill before starting an `objective-loop`. One objective per file/run.
 
 - Append every attempt to `results.tsv` (see template header)
 - Mirror to project tracker if `AGENTS-FEEDBACK.md` defines one
-- On loop end: append a condensed row to the Try log in `AGENTS-FEEDBACK.md`
+- On loop end: append a condensed entry to `EXPERIMENTS.md`

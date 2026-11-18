@@ -26,7 +26,7 @@
 
 - Prefer well-known public checkpoints over ad-hoc contrastive runs on tiny private data.
 - Read whether the checkpoint expects a specific projection head discard and pecularities (e.g. patch size, register tokens).
-- Still run `train-verify` after wiring — wrong norm or missed interpolate is silent.
+- Still run `verify-training` after wiring — wrong norm or missed interpolate is silent.
 
 ## When scratch can win
 

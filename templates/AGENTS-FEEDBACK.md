@@ -1,8 +1,30 @@
 # AGENTS-FEEDBACK
 
-Repo-local **feedback map**: how an agent observes whether an experiment worked. Created/updated by `feedback-setup`. Other judgment skills reread this file; they do not invent wiring.
+Repo-local **router + config** for ML judgment: how to observe success, where to log experiments, and which skills to reach for. Created/updated by `wire-feedback`.
 
-> Not an objective-loop contract. Loop runs use `program.md` + `results.tsv` separately.
+Keep this file **short and stable**. Do **not** append experiment narratives here — those go in the experiment log.
+
+## Experiment log
+
+- **Path**: `EXPERIMENTS.md` (repo root unless noted otherwise)
+- **Rule**: append-only human-readable experiment entries; never dump run notes into this file
+
+## Skill router
+
+Suggested next skill by situation (judgment pack):
+
+| Situation | Skill |
+|-----------|--------|
+| “What skills / where do I start?” | `list-skills` |
+| Feedback wiring missing/stale | `wire-feedback` |
+| New/changed data or labels | `audit-data` (+ `cv-data-quality` for vision) |
+| Planning a run / many knobs | `design-experiment` |
+| Choosing loss / objective | `design-loss` *(if installed)* |
+| Choosing model family | `choose-architecture` *(if installed)* |
+| Before long train / new loop | `verify-training` |
+| Training looks sick | `diagnose-training` |
+| Reading metrics / slices | `validate-results` (+ `cv-error-analysis` for vision) |
+| Bounded iterate-keep-discard | `run-objective-loop` |
 
 ## Feedback sources
 
@@ -27,15 +49,12 @@ Repo-local **feedback map**: how an agent observes whether an experiment worked.
 
 - [ ] Missing feedback the next human/agent should add (plots, finer metrics, slice evals):
 
-## Try log
+## Related artifacts
 
-Durable cross-session record. Append; do not rely on chat history.
+| File | Role |
+|------|------|
+| `EXPERIMENTS.md` | Cross-session experiment log (narrative) |
+| `program.md` | One objective-loop contract (when looping) |
+| `results.tsv` | Dense per-loop ledger (usually untracked) |
 
-| Date | Hypothesis | Change (mutable surface) | Signals | Keep/Discard | Notes |
-|------|------------|--------------------------|---------|--------------|-------|
-| | | | | | |
-
-## Related
-
-- Objective loop (when used): `program.md`, `results.tsv`
-- Judgment pack: compose with HF / Ultralytics / MLflow **tool** skills for commands; this file stores **what this repo observes**.
+Compose with HF / Ultralytics / MLflow **tool** skills for commands; this file stores **what this repo observes** and **where notes go**.

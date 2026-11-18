@@ -8,15 +8,15 @@ This is the difference between an agent that can write a training loop and one t
 
 Requires a skills-compatible agent ([Agent Skills](https://agentskills.io/)).
 
-```bash
+``bash
 npx skills add MatthewJWhittle/ml-wisdom-skills
-```
+``
 
 Install a subset:
 
-```bash
-npx skills add MatthewJWhittle/ml-wisdom-skills --skill train-verify
-```
+``bash
+npx skills add MatthewJWhittle/ml-wisdom-skills --skill verify-training
+``
 
 ## What’s inside
 
@@ -24,13 +24,13 @@ npx skills add MatthewJWhittle/ml-wisdom-skills --skill train-verify
 
 | Skill | When |
 |-------|------|
-| [`feedback-setup`](skills/feedback-setup/SKILL.md) | Wire how the agent observes success; write `AGENTS-FEEDBACK.md` |
-| [`data-judgment`](skills/data-judgment/SKILL.md) | Inspect data before modeling |
-| [`experiment-discipline`](skills/experiment-discipline/SKILL.md) | Hypotheses, baselines, one change at a time |
-| [`train-verify`](skills/train-verify/SKILL.md) | Correctness gates (loss@init, overfit tiny batch, …) |
-| [`train-diagnose`](skills/train-diagnose/SKILL.md) | Decision trees when training is sick |
-| [`evaluate`](skills/evaluate/SKILL.md) | Metrics, slices, Goodhart guardrails |
-| [`objective-loop`](skills/objective-loop/SKILL.md) | Scoped ratchet iteration with reasoning traces |
+| [`wire-feedback`](skills/wire-feedback/SKILL.md) | Wire how the agent observes success; write `AGENTS-FEEDBACK.md` |
+| [`audit-data`](skills/audit-data/SKILL.md) | Inspect data before modeling |
+| [`design-experiment`](skills/design-experiment/SKILL.md) | Hypotheses, baselines, one change at a time |
+| [`verify-training`](skills/verify-training/SKILL.md) | Correctness gates (loss@init, overfit tiny batch, …) |
+| [`diagnose-training`](skills/diagnose-training/SKILL.md) | Decision trees when training is sick |
+| [`validate-results`](skills/validate-results/SKILL.md) | Metrics, slices, Goodhart guardrails |
+| [`run-objective-loop`](skills/run-objective-loop/SKILL.md) | Scoped ratchet iteration with reasoning traces |
 
 ### Computer vision overlays
 
@@ -41,13 +41,20 @@ npx skills add MatthewJWhittle/ml-wisdom-skills --skill train-verify
 | [`cv-transfer`](skills/cv-transfer/SKILL.md) | Transfer / fine-tune judgment |
 | [`cv-error-analysis`](skills/cv-error-analysis/SKILL.md) | FP/FN grids, slices, next action |
 
+### Utilities
+
+| Skill | When |
+|-------|------|
+| [`list-skills`](skills/list-skills/SKILL.md) | “What skills?” / which to run next (thin router) |
+
 ## Consumer artifacts
 
 Templates live in [`templates/`](templates/).
 
 | File | Role |
 |------|------|
-| `AGENTS-FEEDBACK.md` | Standing feedback map + Try log |
+| `AGENTS-FEEDBACK.md` | Router/config: sources, trackers, skill map |
+| `EXPERIMENTS.md` | Append-only experiment log |
 | `program.md` | One objective-loop contract |
 | `results.tsv` | Per-run ledger + reasoning fields |
 

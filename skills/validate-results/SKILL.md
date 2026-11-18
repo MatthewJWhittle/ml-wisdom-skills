@@ -1,5 +1,5 @@
 ---
-name: evaluate
+name: validate-results
 description: >-
   Chooses metrics, slices, and calibration checks; guards against eval leakage,
   Goodhart gaming, and over-precise reporting. Use when picking or defending a
@@ -9,8 +9,7 @@ description: >-
 license: MIT
 ---
 
-# Evaluate
-
+# validate-results
 Judgment for **what “better” means** and whether the number is trustworthy.
 Compose with project eval scripts and trackers; this skill does not document them.
 
@@ -25,7 +24,7 @@ Goodhart). For vision failure taxonomy, also load `cv-error-analysis`.
 | **Guardrail signals** | Can **veto** a primary win (slice collapse, calibration break, VRAM blow-up, leakage symptoms) |
 
 **Goodhart rule:** a primary improvement that trips a critical guardrail is **not**
-a keep. Record the veto. See `objective-loop` keep rules and
+a keep. Record the veto. See `run-objective-loop` keep rules and
 [program.md](../../templates/program.md).
 
 **Gate:** primary + agreed guardrails defined (**pass**) or **human waiver**
@@ -86,7 +85,7 @@ When the number is trusted but still bad:
 2. Hand off to modality overlays (`cv-error-analysis` for images/frames) or
    domain experts — do not invent architecture changes from a single confusion
    matrix cell.
-3. Feed groups back into data/label fixes or a scoped `objective-loop`.
+3. Feed groups back into data/label fixes or a scoped `run-objective-loop`.
 
 ## Out of scope
 
