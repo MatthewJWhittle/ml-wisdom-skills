@@ -31,7 +31,15 @@ Suggested next skill by situation (judgment pack):
 | ID | How to run | What it informs | Primary / guardrail | Notes |
 |----|------------|-----------------|---------------------|-------|
 | e.g. `val-acc` | `python eval.py --split val` | Overall keep/discard | primary | … |
+| e.g. `pred-grid` | `python scripts/plot_preds.py --n 16` | Intended-use / overlay sanity | guardrail | CV: require if metrics-only today |
+| e.g. `boundary` | `python eval.py --metric hd95` | Contour fidelity | guardrail | When edges matter more than mass |
+| e.g. `mosaic-stitch` | `python scripts/stitch_eval.py` | Tile seam / AOI consistency | guardrail | Tiled EO / sliding-window deploy |
 | e.g. `confusion` | `python scripts/plot_cm.py` | Class confusions | guardrail | … |
+
+## Intended use (optional)
+
+- Rubric path (what “good enough” means in words):
+- Fixed review board (ids / path):
 
 ## Holdouts & splits
 

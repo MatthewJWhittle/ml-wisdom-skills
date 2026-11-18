@@ -30,3 +30,13 @@ Shared failure modes for ML/DL judgment skills. Use as a scan list when a gate f
 - Plots/scripts missing for the modality (e.g. CV with numbers only)
 - Chat history as the only experiment log
 - Soft gates with no pass criteria and no human waiver path
+
+## Metric–utility & composition
+
+- Primary Dice/IoU/accuracy up while **boundaries** or intended-use overlays fail
+- Soft train objective vs hard deploy mask / different threshold unstated
+- **mAP** improved while **operating-point** PR collapses
+- Per-tile / per-crop scores fine; **mosaic, track, or page-level** product fails
+- Adjacent tiles disagree on spatially continuous classes (seam / context failure)
+- Labels too coarse for the utility the product needs
+- Eval geometry ≠ serve geometry (tile size, stride, norm, stitch policy)

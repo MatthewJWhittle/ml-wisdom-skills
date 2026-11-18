@@ -11,9 +11,16 @@ Ask: what action changes if the metric moves?
 | Probabilities billed as confidence | Calibration-aware metrics + proper scoring |
 | Balanced multi-class | Macro-F1 or balanced error — not micro-acc alone |
 | Segmentation / detection | Task-standard IoU/AP **plus** slice audits |
+| Boundary-critical seg | Overlap (Dice/IoU) **paired with** boundary/surface metric or band IoU — overlap alone under-penalizes soft edges |
+| Deployed detector | Operating-point PR / cost **and** optional AP — not AP alone |
+| Tiled / stitched dense pred | Chip metrics **and** mosaic/AOI or seam disagreement guardrail |
 
 If stakeholders optimize a vanity metric, keep it as a **reported** number and put
 the decision metric in the primary slot — or get a waiver.
+
+**Metric–utility gap:** if the action cares about edges, rare classes, calibrated
+scores, or a composed artifact, a global Dice/mAP/accuracy win is insufficient
+without matching guardrails ([ADR 0010](../../../docs/adr/0010-metric-utility-gap.md)).
 
 ## Guardrail examples
 
@@ -21,6 +28,10 @@ the decision metric in the primary slot — or get a waiver.
 - Max acceptable calibration error or Brier degradation
 - Latency / VRAM / cost ceilings
 - “No slice worse than X relative to baseline”
+- Boundary / HD95 / surface Dice / edge-band IoU when contours matter
+- Operating-point precision/recall floor (detection)
+- Mosaic- or AOI-level score; overlap-strip class-disagreement rate (tiled EO/CV)
+- Intended-use rubric fail rate on a fixed N-case board
 
 ## Slice checklist
 

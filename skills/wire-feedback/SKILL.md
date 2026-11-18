@@ -41,10 +41,13 @@ Find concrete **feedback sources** (commands, scripts, paths — not vibes):
 
 - Eval / test entrypoints and CI jobs that score models
 - Metric logs (CSV, JSON, stdout conventions)
-- Plot / visualization scripts
+- Plot / visualization scripts (**pred overlays**, not numbers-only)
 - Holdout / test sets and split definitions
 - Existing trackers: MLflow, W&B, TensorBoard, or **none**
 - Any existing experiment notes (migrate out of `AGENTS-FEEDBACK.md` if agents already dumped there)
+- For CV / dense pred: boundary or surface metrics; **operating-point** PR if detection
+- If products are **tiled/stitched**: mosaic/AOI eval or seam-check script
+- Optional: short **intended-use rubric** path (5–10 lines humans/agents can apply to a fixed board)
 
 **Done when**: each source has a runnable invocation or an honest “missing.”
 
@@ -85,6 +88,8 @@ Create from template if missing. Do not invent fake historical experiments.
 ### 5. Recommend missing feedback
 
 Gaps must be specific (“add `scripts/plot_preds.py` for 16-val grid”), not “improve observability.”
+
+For vision, treat as a gap when there is a scalar metric but **no** pred-grid (or mosaic) command — metrics alone invite metric–utility misses ([ADR 0010](../../docs/adr/0010-metric-utility-gap.md)).
 
 ### 6. Stop
 

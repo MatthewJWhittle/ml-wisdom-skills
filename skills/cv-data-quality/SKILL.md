@@ -39,6 +39,9 @@ Applies to still images and short video treated as frames. Goal: *become one wit
 - Masks that don’t match the box; inverted masks; polygon self-intersections.
 - Coordinate convention bugs (xyxy vs xywh, normalized vs absolute, y-down).
 
+### Labels vs intended use
+- If the product needs crisp boundaries or fine classes but labels are coarse blobs / lumped taxonomy, record that as a **data/contract** finding — metrics will look fine and still fail utility (`validate-results`, ADR 0010).
+
 ### Visualization pass (minimum)
 See [references/visualization-checklist.md](references/visualization-checklist.md). Prefer wiring these into the feedback map (`AGENTS-FEEDBACK.md`) so later skills can re-run them.
 
