@@ -31,12 +31,12 @@ Shared failure modes for ML/DL judgment skills. Use as a scan list when a gate f
 - Chat history as the only experiment log
 - Soft gates with no pass criteria and no human waiver path
 
-## Metric–utility & composition
+## Score looks good, use still fails
 
-- Primary Dice/IoU/accuracy up while **boundaries** or intended-use overlays fail
-- Soft train objective vs hard deploy mask / different threshold unstated
-- **mAP** improved while **operating-point** PR collapses
-- Per-tile / per-crop scores fine; **mosaic, track, or page-level** product fails
-- Adjacent tiles disagree on spatially continuous classes (seam / context failure)
-- Labels too coarse for the utility the product needs
-- Eval geometry ≠ serve geometry (tile size, stride, norm, stitch policy)
+- Main score (Dice/IoU/accuracy) up, but **edges** or human “good enough” overlays fail
+- Train with soft scores; deploy a hard mask / different threshold without saying so
+- **mAP** up, but precision/recall at the **real deploy threshold** down
+- Each **tile/crop** looks fine; the **stitched map**, track, or full page fails
+- Neighboring tiles disagree on land cover that should be continuous (seams)
+- Labels too coarse for what the product needs
+- Eval tiles/norm/stitch ≠ how you actually serve

@@ -1,57 +1,54 @@
-# Metrics, slices, calibration
+# Metrics and slices
 
 ## Choosing a primary
 
-Ask: what action changes if the metric moves?
+Ask: **what action changes if this number moves?**
 
-| Decision style | Lean toward |
-|----------------|-------------|
+| Kind of decision | Prefer |
+|------------------|--------|
 | Ranking / retrieval | AUC, NDCG, recall@k |
-| Fixed threshold deploy | Precision/recall or cost at that threshold |
-| Probabilities billed as confidence | Calibration-aware metrics + proper scoring |
-| Balanced multi-class | Macro-F1 or balanced error — not micro-acc alone |
-| Segmentation / detection | Task-standard IoU/AP **plus** slice audits |
-| Boundary-critical seg | Overlap (Dice/IoU) **paired with** boundary/surface metric or band IoU — overlap alone under-penalizes soft edges |
-| Deployed detector | Operating-point PR / cost **and** optional AP — not AP alone |
-| Tiled / stitched dense pred | Chip metrics **and** mosaic/AOI or seam disagreement guardrail |
+| Fixed threshold in production | Precision/recall or cost **at that threshold** |
+| Probabilities used as confidence | Calibration-aware scores |
+| Imbalanced multi-class | Macro-F1 / balanced error — not accuracy alone |
+| Segmentation / detection | Standard IoU/AP **plus** slices |
+| Boundaries matter (organs, parcels, footprints) | Overlap (Dice/IoU) **and** a boundary/edge check — overlap alone forgives soft edges |
+| Detection you ship at one score | Operating-point PR **and** optional AP — not AP alone |
+| Tiles stitched into a map | Chip scores **and** a mosaic/AOI or seam check |
 
-If stakeholders optimize a vanity metric, keep it as a **reported** number and put
-the decision metric in the primary slot — or get a waiver.
+If stakeholders love a vanity metric, report it — but put the **decision**
+metric in the primary slot (or get a waiver).
 
-**Metric–utility gap:** if the action cares about edges, rare classes, calibrated
-scores, or a composed artifact, a global Dice/mAP/accuracy win is insufficient
-without matching guardrails ([ADR 0010](../../../docs/adr/0010-metric-utility-gap.md)).
+**Score looks good, use still fails:** when the job cares about edges, rare
+classes, real thresholds, or a stitched/whole product, a global Dice/mAP/accuracy
+win is not enough without matching guardrails
+([ADR 0010](../../../docs/adr/0010-metric-utility-gap.md)).
 
 ## Guardrail examples
 
-- Per-class / per-site recall floors
-- Max acceptable calibration error or Brier degradation
+- Per-class or per-site recall floors
+- Calibration / confidence quality floors
 - Latency / VRAM / cost ceilings
-- “No slice worse than X relative to baseline”
-- Boundary / HD95 / surface Dice / edge-band IoU when contours matter
-- Operating-point precision/recall floor (detection)
-- Mosaic- or AOI-level score; overlap-strip class-disagreement rate (tiled EO/CV)
-- Intended-use rubric fail rate on a fixed N-case board
+- “No critical slice worse than X vs baseline”
+- Boundary / edge-band / surface distance when contours matter
+- Precision/recall at the **deploy** threshold (detection)
+- Mosaic- or AOI-level score; disagreement on tile overlaps (tiled maps)
+- Fail rate on a short human “good enough” rubric
 
 ## Slice checklist
 
-For each release or loop milestone:
+1. List slices that would make an overall win unacceptable if they failed.
+2. Make sure the eval command actually prints them (gap → `AGENTS-FEEDBACK.md`).
+3. Mark which slices are product-critical vs exploratory.
 
-1. List slices that would make a global win unacceptable if they failed.
-2. Ensure the eval command actually emits them (feedback map gap → propose in
-   `AGENTS-FEEDBACK.md`).
-3. Separate **product-critical** slices from exploratory ones.
+## Eval leaking into train
 
-## Leakage patterns (eval → train)
-
-- Identical or near-duplicate samples across splits
-- Early stopping + model selection + final claim all on one val set with no holdout
-- Preprocessing fit (scaler, vocabulary, aug stats) on full data including test
-- Label leakage via metadata correlated with the target only in the eval set
+- Near-duplicate samples across splits
+- Early stop + selection + final claim all on one val set with no holdout
+- Scaler / vocab / aug stats fit on full data including test
+- Metadata that leaks the label only in eval
 
 ## Reporting
 
-- State n, split id/hash, and eval command.
-- Prefer intervals or repeated-seed spread when n is small; otherwise one honest
-  full-set number beats false precision.
-- Never round a debug-set 0.8731 into a headline without re-running full eval.
+- State n, split id, and the eval command.
+- Prefer uncertainty when n is small; one honest full-set number beats fake precision.
+- Do not promote a debug-subset score to a headline without full eval.

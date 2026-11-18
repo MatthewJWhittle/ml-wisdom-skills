@@ -45,9 +45,11 @@ Find concrete **feedback sources** (commands, scripts, paths — not vibes):
 - Holdout / test sets and split definitions
 - Existing trackers: MLflow, W&B, TensorBoard, or **none**
 - Any existing experiment notes (migrate out of `AGENTS-FEEDBACK.md` if agents already dumped there)
-- For CV / dense pred: boundary or surface metrics; **operating-point** PR if detection
-- If products are **tiled/stitched**: mosaic/AOI eval or seam-check script
-- Optional: short **intended-use rubric** path (5–10 lines humans/agents can apply to a fixed board)
+- For vision: ways to **see** predictions (overlays), not only a scalar
+- Boundary/edge metrics if sharp outlines matter; precision/recall at the **real
+  deploy threshold** if you ship detection that way
+- If you **stitch tiles into a map**: a mosaic or seam check
+- Optional: a short “what good enough means” rubric (a few lines + a fixed board)
 
 **Done when**: each source has a runnable invocation or an honest “missing.”
 
@@ -89,7 +91,9 @@ Create from template if missing. Do not invent fake historical experiments.
 
 Gaps must be specific (“add `scripts/plot_preds.py` for 16-val grid”), not “improve observability.”
 
-For vision, treat as a gap when there is a scalar metric but **no** pred-grid (or mosaic) command — metrics alone invite metric–utility misses ([ADR 0010](../../docs/adr/0010-metric-utility-gap.md)).
+For vision, treat as a gap when you only have a number and **no** prediction
+overlay (or mosaic) command — numbers alone hide “looks fine / fails use”
+([ADR 0010](../../docs/adr/0010-metric-utility-gap.md)).
 
 ### 6. Stop
 

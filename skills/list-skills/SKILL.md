@@ -28,7 +28,7 @@ Point the human at **one** next skill for their situation.
 | `design-experiment` | Hypothesis, baseline ladder, one change | Planning runs, tempted to turn many knobs |
 | `verify-training` | Correctness gates (init loss, tiny-batch overfit, …) | Before long trains / after pipeline changes |
 | `diagnose-training` | Ordered probes when training is sick | NaN, can’t overfit, train↓ val flat — before HP thrashing |
-| `validate-results` | Metrics, slices, Goodhart / metric–utility guardrails | Choosing/defending a metric; scores vs intended use |
+| `validate-results` | Metrics + guardrails; catch “score good / use bad” | Choosing metrics; reading eval; overlays disagree with scores |
 | `run-objective-loop` | Scoped keep/discard ratchet + `program.md` / `results.tsv` | Bounded iteration toward a measurable goal |
 
 ## CV overlays
@@ -38,7 +38,7 @@ Point the human at **one** next skill for their situation.
 | `cv-data-quality` | Vision data/label/leakage audit | Image/video datasets (with `audit-data`) |
 | `cv-augmentation` | Aug policy after verify gates | Adding/tuning augs; train/serve mismatch |
 | `cv-transfer` | Freeze/finetune / backbone judgment | Choosing or finetuning a pretrained vision model |
-| `cv-error-analysis` | FP/FN grids, soft edges, seams → attribution | After trusted eval; metrics fine but overlays/mosaic bad |
+| `cv-error-analysis` | Look at failures (edges, seams, FP/FN); name the cause | After eval; score fine but pictures/mosaic look wrong |
 
 ## Utilities
 

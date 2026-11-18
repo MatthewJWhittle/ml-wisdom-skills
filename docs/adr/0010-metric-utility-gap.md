@@ -1,21 +1,26 @@
-# Metric–utility gap (and composition mismatch) as core CV judgment
+# When the score looks good but the model is bad for real use
 
-Approved doctrine for refining CV / eval skills. Detailed evidence: [`docs/research/2026-11-18-cv-defect-diagnosis-beyond-metrics.md`](../research/2026-11-18-cv-defect-diagnosis-beyond-metrics.md).
+Background research: [`docs/research/2026-11-18-cv-defect-diagnosis-beyond-metrics.md`](../research/2026-11-18-cv-defect-diagnosis-beyond-metrics.md).
 
 ## Decision
 
-Treat “metrics look good but the model is bad for use” as a first-class failure class: the **metric–utility gap**, often compounded by **composition mismatch** (score the part, ship the whole).
+Treat “the metric looks fine, but the model fails what we actually need” as a first-class failure.
 
-Teaching cases (Dice vs boundary fidelity; per-tile OK / mosaic seams in geo CV) are instances of a wider pattern: proxy mismatch, operating-point mismatch, taxonomy mismatch, unit-of-analysis mismatch, train-vs-serve contract skew, leakage-inflated scores, etc.
+Two common shapes:
 
-## Implications for the pack
+1. **Wrong score for the job** — e.g. Dice/IoU cares about overlap mass; the product needs sharp boundaries.
+2. **Score the part, ship the whole** — e.g. each tile looks fine; the stitched map has seams or class flips.
 
-1. **Name the decision first** — primary vs guardrail follow the product action, not the leaderboard default (`validate-results`, `design-experiment`).
-2. **Wire observation channels that match the decision** — pred overlays, boundary/surface metrics, mosaic/AOI eval, operating-point PR, short intended-use rubrics (`wire-feedback` / feedback map).
-3. **Veto keeps that fail utility or composition** — primary↑ is necessary, not sufficient (`run-objective-loop`, `cv-error-analysis`).
-4. **Specialize checks in overlays, not new encyclopedias** — refine `validate-results`, `cv-error-analysis`, `wire-feedback`, and shared watchouts; optional thin geo tiling overlay later. Do not rebuild MONAI/Ultralytics/torchgeo how-tos.
+Same idea shows up elsewhere: mAP up but the real threshold fails; per-image OK but per-field fails; labels too coarse for the product; val inflated by leakage.
+
+## What skills should do
+
+1. **Say what decision the model supports**, then pick primary and guardrail metrics from that (`validate-results`, `design-experiment`).
+2. **Wire ways to see that decision** — prediction overlays, boundary checks, mosaic/AOI eval, threshold PR, a short “good enough” rubric (`wire-feedback`).
+3. **Do not keep a run** if the main score improves but those checks fail (`run-objective-loop`, `cv-error-analysis`).
+4. **Add detail in overlays**, not new tool encyclopedias. Do not rebuild MONAI / Ultralytics / torchgeo docs here.
 
 ## Non-goals
 
-- Hard-blocking all work on missing viz (prefer warn + recommend until skills are refined).
-- Shipping `cv-geo-tiling` / `design-loss` in this ADR — research and doctrine only; implementation is a follow-up.
+- Blocking all work just because viz is missing (warn and recommend).
+- Shipping a separate geo-tiling skill in this change — refine existing skills first.

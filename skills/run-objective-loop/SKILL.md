@@ -86,9 +86,9 @@ Primary-only wins that trip [things-to-watch](../../references/things-to-watch.m
 items named as guardrails in `program.md` are discards. Complexity: prefer
 simpler changes when primary deltas are tiny (Karpathy simplicity criterion).
 
-**CV examples of guardrail vetoes:** boundary/HD95 worse; operating-point PR
-down despite mAP up; mosaic/seam disagreement up; intended-use rubric fails —
-even if Dice/IoU/accuracy improved ([ADR 0010](../../docs/adr/0010-metric-utility-gap.md)).
+**Vision examples — still discard even if Dice/IoU/accuracy improved:** edges
+worse; precision/recall at the real threshold worse; mosaic seams worse; human
+“good enough” board fails ([ADR 0010](../../docs/adr/0010-metric-utility-gap.md)).
 
 ## 5. `results.tsv` schema
 

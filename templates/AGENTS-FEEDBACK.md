@@ -31,14 +31,14 @@ Suggested next skill by situation (judgment pack):
 | ID | How to run | What it informs | Primary / guardrail | Notes |
 |----|------------|-----------------|---------------------|-------|
 | e.g. `val-acc` | `python eval.py --split val` | Overall keep/discard | primary | … |
-| e.g. `pred-grid` | `python scripts/plot_preds.py --n 16` | Intended-use / overlay sanity | guardrail | CV: require if metrics-only today |
-| e.g. `boundary` | `python eval.py --metric hd95` | Contour fidelity | guardrail | When edges matter more than mass |
-| e.g. `mosaic-stitch` | `python scripts/stitch_eval.py` | Tile seam / AOI consistency | guardrail | Tiled EO / sliding-window deploy |
-| e.g. `confusion` | `python scripts/plot_cm.py` | Class confusions | guardrail | … |
+| e.g. `pred-grid` | `python scripts/plot_preds.py --n 16` | Do overlays look usable? | guardrail | Add if you only have scalars today |
+| e.g. `boundary` | `python eval.py --metric hd95` | Are edges sharp enough? | guardrail | When outlines matter more than fill |
+| e.g. `mosaic-stitch` | `python scripts/stitch_eval.py` | Do stitched tiles agree? | guardrail | Tiled maps / sliding-window deploy |
+| e.g. `confusion` | `python scripts/plot_cm.py` | Which classes confuse? | guardrail | … |
 
-## Intended use (optional)
+## What “good enough” means (optional)
 
-- Rubric path (what “good enough” means in words):
+- Rubric path (plain-language rules):
 - Fixed review board (ids / path):
 
 ## Holdouts & splits

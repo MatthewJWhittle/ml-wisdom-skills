@@ -1,62 +1,74 @@
 ---
 name: cv-error-analysis
 description: >-
-  Diagnoses CV model errors when metrics plateau or look fine but outputs fail
-  intended use — confusion matrices, hard examples, size/occlusion/scene slices,
-  FP/FN grids, soft-boundary and tile-mosaic/seam failures — then attributes
-  data vs model vs aug vs threshold. Use after a trusted eval, before starting
-  a run-objective-loop on vision tasks, or when Dice/mAP/accuracy disagree with
-  overlays or stitched products.
+  Diagnoses vision model failures when metrics plateau or look fine but outputs
+  fail real use — FP/FN grids, soft boundaries, tile seams / mosaics, slices —
+  then attributes data vs model vs aug vs threshold. Use after a trusted eval,
+  before a vision run-objective-loop, or when Dice/mAP/accuracy disagree with
+  overlays or stitched maps.
 license: MIT
 ---
 
 # cv-error-analysis
 
-**Overlay** on `validate-results` (and `diagnose-training` when training dynamics look sick). Load the spines for metric trust and training pathology; this skill for *vision* failure attribution. Hand off to `run-objective-loop` **only after** a written diagnosis — loops without diagnosis thrash augs and LRs.
+**Overlay** on `validate-results`. Also load `diagnose-training` if training
+itself looks broken. This skill answers: *what kind of vision failure is this?*
 
-Compose with plotting/eval scripts from the feedback map; this skill decides *what* to look at and *what it means*. Doctrine: [ADR 0010](../../docs/adr/0010-metric-utility-gap.md).
+Hand off to `run-objective-loop` **only after** a short written diagnosis —
+otherwise agents thrash augs and learning rates.
 
-## Preconditions
+Use plot/eval commands from the feedback map. Background:
+[ADR 0010](../../docs/adr/0010-metric-utility-gap.md).
 
-- Eval pipeline trusted (`validate-results` gates): fixed split, correct decode, no train/serve mismatch.
+## Before you start
+
+- Eval setup is trustworthy (`validate-results`): fixed split, correct decode,
+  train/serve match.
 - Prefer unaugmented val/test for diagnosis (TTA is a separate experiment).
-- If training is sick (NaN, can’t overfit), stop — `diagnose-training` first.
+- If loss is NaN or you cannot overfit a tiny batch → `diagnose-training` first.
 
-## Procedure
+## Steps
 
-1. **Global picture** — confusion matrix (classification) or TP/FP/FN counts by class (detection/seg).
-2. **Metric–utility check** — does the primary celebrate mass/overlap/AP while the product needs boundaries, operating-point PR, or a **composed** artifact (mosaic, track)?
-3. **Qualitative grids** — fixed-size boards of high-confidence FP, FN, correct-but-hard TP; overlays for boxes/masks; include **“score OK / look bad”** cases when suspected.
-4. **Slice** — stratify by object size, occlusion, density, scene/time-of-day, sensor, near-dup clusters; for seg add **boundary band**; for tiled products add **seam / adjacent-tile** strips.
-5. **Attribute** — each dominant error mode → data / model / aug / threshold / **composition** (table below).
-6. **One next lever** — only then open `run-objective-loop` with that lever in the mutable surface.
+1. **Overview** — confusion matrix (classification) or TP/FP/FN by class
+   (detection/seg).
+2. **Does the score match the job?** — e.g. Dice loves overlap; the product
+   needs sharp edges. Or each tile scores well but the **stitched map** fails.
+3. **Look at grids** — FP, FN, hard TP; boxes/masks overlaid. Include cases
+   where the **score is high but the picture looks wrong**.
+4. **Slice** — size, occlusion, scene, sensor, … For segmentation, check a
+   **boundary strip**. For tiled products, check **seams between tiles**.
+5. **Attribute** each top failure mode (table below).
+6. **One next change** — then open `run-objective-loop` with only that lever.
 
-Templates: [references/error-grids.md](references/error-grids.md).
+Grid templates: [references/error-grids.md](references/error-grids.md).
 
-## Attribution table
+## What evidence points to
 
-| Evidence | Lean toward |
-|----------|-------------|
-| Humans disagree or labels wrong on FN/FP grids | **Data** → `cv-data-quality` |
-| Labels too coarse for the utility (e.g. need crisp parcel edge, GT is blob) | **Data** / metric contract → `validate-results` |
-| Near-dups / leakage inflate val | **Data** (split) |
-| Soft/blobby edges; Dice fine; surface/boundary metric or eye test fails | **Model** / **loss** / threshold — diagnose first; one lever only |
-| Tiles look fine; mosaic seams or adjacent-tile class flips | **Composition** — stitch/overlap/norm/context; eval at mosaic scale |
-| Train overfit OK, specific rare slice fails | **Data** (collect/rebalance) or **model** capacity/representation |
-| Errors match banned/missing transforms (e.g. never saw rotation) | **Aug** → `cv-augmentation` |
-| Precision/recall trade only; curves look sane | **Threshold** / calibration |
-| All slices mediocre; backbone undertrained or domain gap | **Model** / **transfer** → `cv-transfer` |
-| Loss/NaN/can’t overfit | Stop — `diagnose-training`, not error grids |
+| If you see… | Likely cause |
+|-------------|--------------|
+| Humans disagree or labels wrong on the grids | **Data** → `cv-data-quality` |
+| Need crisp edges / fine classes, but labels are coarse blobs | **Data / metric choice** → `validate-results` |
+| Near-dups leak across splits | **Data** (split) |
+| Soft edges; Dice fine; eye or boundary metric fails | **Model / loss / threshold** — one change only |
+| Tiles OK; mosaic seams or neighboring tiles disagree on continuous land cover | **Whole-product / stitch** — check overlap, norm, context; eval the mosaic |
+| Train fine; one rare slice fails | **Data** or **model** capacity |
+| Failures match missing augs (e.g. never rotated) | **Aug** → `cv-augmentation` |
+| Only a precision/recall trade at threshold | **Threshold** |
+| Everything mediocre; domain gap | **Model / transfer** → `cv-transfer` |
+| NaN / cannot overfit | Stop — `diagnose-training` |
 
-Guardrails: [things-to-watch](../../references/things-to-watch.md).
+Also: [things-to-watch](../../references/things-to-watch.md).
 
 ## Done when
 
-- Top error modes listed with example IDs and an attributed cause each.
-- If metric–utility or composition mismatch: named explicitly (not “need more epochs”).
-- Explicit statement: ready for `run-objective-loop` **or** blocked on data/label/feedback work.
-- No multi-lever “kitchen sink” experiment proposed as the first fix.
+- Top failure modes listed with example ids and a cause each.
+- If “score good / use bad” or “tiles good / mosaic bad”: say so plainly
+  (not “need more epochs”).
+- Clear: ready for `run-objective-loop` **or** blocked on data/labels/feedback.
+- First fix is **one** lever, not a kitchen sink.
 
 ## Out of scope
 
-Wiring new metrics from scratch → `wire-feedback`. Blind hyperparam ratchet → `run-objective-loop` after this skill. Reimplementing tiling/stitch libraries → compose with project/geo tooling.
+Adding new metrics wiring → `wire-feedback`. Blind hyperparameter search →
+`run-objective-loop` after this. Rebuilding tiling libraries → use the
+project’s geo/CV tools.
