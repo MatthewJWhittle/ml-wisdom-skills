@@ -21,8 +21,17 @@ Use while scanning a consumer repo for `wire-feedback`.
 - [ ] Existing experiment names, projects, or local store URIs
 - [ ] Auth assumptions (env vars) — note them; do not invent secrets
 
+## Vision / stitched products (when applicable)
+
+- [ ] Prediction overlay / sample grid (image + label + pred)
+- [ ] Edge/boundary check if outlines matter
+- [ ] Precision/recall at the real deploy threshold (not only mAP)
+- [ ] Mosaic or seam check if tiles are stitched
+- [ ] Short “good enough” rubric path (optional)
+
 ## Quality bar for each source
 
-- Runnable by an agent without tribal knowledge?
-- Discriminates keep vs discard for typical one-change experiments?
-- Has at least one **guardrail** if the primary can lie (leak, slice collapse, OOM)?
+- Can an agent run it without tribal knowledge?
+- Does it separate keep vs discard for typical one-change experiments?
+- Is there a guardrail when the main score can lie (leakage, bad slice, OOM,
+  soft edges, mosaic seams)?

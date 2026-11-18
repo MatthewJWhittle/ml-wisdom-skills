@@ -1,38 +1,44 @@
-# Error grids & slices
+# Error grids and slices
 
-## Minimum grids
+## Minimum boards
 
-| Grid | Content |
-|------|---------|
-| High-conf FP | Model sure, label negative / wrong box |
-| FN (misses) | Label positive, model below threshold or IoU fail |
+| Board | What to show |
+|-------|----------------|
+| High-conf FP | Model sure, label says no / wrong box |
+| Misses (FN) | Label yes, model missed or IoU failed |
 | Hard TP | Correct but low margin / heavy occlusion |
-| Confusion pairs | Top off-diagonal class pairs side-by-side |
+| Confusion pairs | Top confused class pairs side by side |
+| Score high / looks wrong | High Dice/IoU/AP but overlay fails the real job (soft edge, bad seam, wrong threshold) |
 
-Always show **pixels + labels + predictions** on the same tile.
+Always show **image + label + prediction** together.
 
-## Useful slices (pick what the domain implies)
+## Useful slices (pick what fits)
 
-- Object **area** quartiles (small/medium/large)
-- Aspect ratio extremes
-- Occlusion / truncation tags if present
-- Crowding (instance count per image)
-- Scene, camera, acquisition day
-- Distance to nearest train near-dup (leakage smell)
+- Object **size** (small / medium / large)
+- Extreme aspect ratios
+- Occlusion / truncation
+- Crowding (how many instances per image)
+- Scene, camera, day
+- Near-dup distance to train (leakage smell)
+- **Boundary strip** (look or score only near the contour)
+- **Seams between tiles** when you stitch a mosaic
 
 ## Detection / segmentation extras
 
-- Per-class AP and PR curves before threshold fiddling
-- Localization vs classification errors (right class, bad box vs wrong class)
-- Boundary failures vs missed instances for masks
+- Per-class AP and PR before fiddling thresholds
+- Wrong box vs wrong class
+- Soft edges vs missed objects
+- Soft training scores vs **hard mask at the deploy threshold**
+- Tiled maps: look at the **mosaic**, not only chips — chip scores can lie
 
-## Write-up schema (for EXPERIMENTS.md / reasoning trace)
+## Note for EXPERIMENTS.md
 
-``
+```text
 mode: <short name>
 count: <n>
 examples: <ids>
-attribution: data | model | aug | threshold
-next_lever: <single change>
-blocked_on: <none | labels | split | feedback>
-``
+cause: data | model | aug | threshold | whole-product
+score_vs_use: match | mismatch
+next_change: <one lever>
+blocked_on: <none | labels | split | feedback | mosaic-eval>
+```
