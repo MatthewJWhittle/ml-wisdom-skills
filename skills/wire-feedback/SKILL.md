@@ -97,7 +97,7 @@ overlay (or mosaic) command — numbers alone hide “looks fine / fails use”
 
 ### 6. Stop
 
-Point to `design-experiment` / `run-objective-loop` when wiring is ready. Logging of actual tries is done by those skills into **`EXPERIMENTS.md`**.
+Point to `design-experiment` for planning or `run-objective-loop` for requested bounded iteration. The loop records actual tries in **`EXPERIMENTS.md`**.
 
 ## Experiment log (other skills write here)
 
