@@ -27,13 +27,13 @@ Canonical framing: [CS231n transfer learning](https://cs231n.github.io/transfer-
 
 ## Freeze → unfreeze recipe
 
-``
+```
 1. Replace head for task; freeze backbone
 2. Train head to stability (higher LR on head)
 3. Unfreeze top blocks or full backbone
 4. Finetune with lower LR on backbone than head
 5. Only then try architecture heroics
-``
+```
 
 Details: [references/finetune-recipe.md](references/finetune-recipe.md).
 

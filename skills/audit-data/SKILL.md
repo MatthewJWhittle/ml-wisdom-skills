@@ -67,7 +67,7 @@ See also [`../../references/things-to-watch.md`](../../references/things-to-watc
 
 Produce a short audit (bullets fine):
 
-``text
+```text
 Task:
 Human cues:
 Raw sample notes:
@@ -77,7 +77,7 @@ Duplicates / leakage:
 Label quality:
 GO | NO-GO — rationale:
 Waivers (if any):
-``
+```
 
 **GO** only if nothing blocking remains (or each blocker has a human **waiver**).  
 **NO-GO** if leakage, broken inputs, or label chaos would make training metrics meaningless.

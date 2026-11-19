@@ -8,15 +8,15 @@ This is the difference between an agent that can write a training loop and one t
 
 Requires a skills-compatible agent ([Agent Skills](https://agentskills.io/)).
 
-``bash
+```bash
 npx skills add MatthewJWhittle/ml-wisdom-skills
-``
+```
 
 Install a subset:
 
-``bash
+```bash
 npx skills add MatthewJWhittle/ml-wisdom-skills --skill verify-training
-``
+```
 
 ## What’s inside
 
@@ -61,6 +61,12 @@ Templates live in [`templates/`](templates/).
 ## Not this repo
 
 Hub/CLI trainers, YOLO pipelines, package encyclopedias — use [huggingface/skills](https://github.com/huggingface/skills), [ultralytics/skills](https://github.com/ultralytics/skills), etc. See [`references/sources.md`](references/sources.md).
+
+## Markdown maintenance
+
+Scan for accidental two-backtick fence lines with
+`rg -n '^\s*`{2}([[:alnum:]_-]+)?\s*$' README.md skills -g '*.md'`.
+Review matches before editing inline code. Fence lines use three backticks.
 
 ## License
 
