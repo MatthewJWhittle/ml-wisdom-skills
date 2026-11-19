@@ -74,6 +74,10 @@ Hard stop if suspected:
 
 **Gate:** clean split story (**pass**) or **human waiver**.
 
+## Evaluation protocol
+
+For a consequential comparison, name the deployment population, prediction and grouping units, data roles and uncertainty that matter for the claim. Use the [short protocol](references/evaluation-protocol.md) to record them. Keep final evaluation separate from selection and state when the evidence is still exploratory.
+
 ## Significant digits
 
 - Quote precision the **full eval set** can support. Do not promote noisy

@@ -20,7 +20,7 @@ Shared failure modes for ML/DL judgment skills. Use as a scan list when a gate f
 ## Experiment process
 
 - Two changes at once (architecture + LR + aug) with no attribution
-- Skipping the baseline ladder (chance → majority → linear → small net → heavier)
+- Making a comparison without a credible baseline for the decision
 - Tuning before the feedback map exists
 - Primary signal up while a guardrail (slice, VRAM, leak symptom) collapses
 

@@ -69,5 +69,5 @@ A modality- or domain-specific judgment skill that adds checks and wisdom on top
 _Avoid_: Plugin, addon, specialisation pack (unless we later adopt pack as a distribution term)
 
 **Baseline ladder**:
-An ordered sequence of deliberately simple reference systems (e.g. chance, majority class, linear probe, small CNN) used as gates before heavier models.
+A menu of reference systems (e.g. chance, train-set prior, linear probe, small CNN, standard fine-tune) for choosing the smallest credible baseline set for a study.
 _Avoid_: SOTA comparison, leaderboard chase

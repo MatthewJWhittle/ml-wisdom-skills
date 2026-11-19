@@ -1,11 +1,13 @@
 # Finetune recipe (CV)
 
-## Stages
+## Options
+
+Pick a starting point based on data, domain gap and compute. Use these as stages only when gradual unfreezing helps isolate instability or feature reuse.
 
 1. **Linear probe / new head** — backbone frozen; confirms features transfer at all.
 2. **Partial unfreeze** — last stages / top blocks; moderate backbone LR.
 3. **Full finetune** — entire net; lowest backbone LR; optional discriminative LRs by stage.
-4. **Longer schedule / resolution bump** — only after the above are stable.
+4. **Longer schedule / resolution bump** — after the chosen short run is stable.
 
 ## Hyperparameter heuristics
 

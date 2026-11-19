@@ -88,7 +88,7 @@ Waivers (if any):
 
 - “We’ll clean labels after the first big train” → no-go until a tiny trusted slice exists.
 - Stats-only comfort without viewing samples → incomplete; finish steps 2–3.
-- Chasing exotic unsupervised pretrain because labels are messy → still prefer a supervised/fine-tune baseline on a cleaned slice first (2019 recipe skepticism is softer in the foundation-model era, but the baseline ladder still comes first — see design-experiment).
+- Chasing exotic unsupervised pretrain because labels are messy → still prefer a supervised/fine-tune baseline on a cleaned slice first (2019 recipe skepticism is softer in the foundation-model era, see design-experiment for choosing credible comparators).
 
 ## Related
 

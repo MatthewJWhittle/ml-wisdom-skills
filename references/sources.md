@@ -11,6 +11,10 @@ Enduring ML/DL judgment this pack cites. Prefer primary sources; skill bodies ke
 - [CS231n: Learning and Evaluation](https://cs231n.github.io/neural-networks-3/) — initial-loss sanity checks and numerical gradient checks.
 - [A Recipe for Training Neural Networks (HN / discussion archives)](https://news.ycombinator.com/item?id=19752276) — community caveats on recipe age.
 
+- [Google Deep Learning Tuning Playbook](https://developers.google.com/machine-learning/guides/deep-learning-tuning-playbook/scientific) — scientific, nuisance and fixed hyperparameters.
+- [Google ML Problem Framing](https://developers.google.com/machine-learning/problem-framing/problem-framing) — connect prediction tasks, outputs and success criteria.
+- [Cross-validation strategies for structured data](https://www.biom.uni-freiburg.de/mitarbeiter/dormann/roberts-et-al-2017-ecography.pdf/at_download/file) — Roberts et al. on matching blocked evaluation to dependence and the prediction task.
+
 ## Nuance (post-2019)
 
 - Unsupervised / self-supervised pretraining skepticism in the 2019 recipe is **more nuanced in 2024+**: foundation models and SSL often win when labeled data is scarce. Still: do **not** chase exotic unsupervised schemes before a supervised (or fine-tune) baseline and a working feedback map.

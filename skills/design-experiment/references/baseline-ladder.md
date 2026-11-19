@@ -1,19 +1,19 @@
-# Baseline ladder (detail)
+# Baseline options
 
-Use with `design-experiment`. Each rung is a **gate**: beat it (or waive) before climbing.
+Use with `design-experiment`. Pick the smallest set that can answer the question. For each comparator, name what it controls and what its result would change. Use the same held-out cases, metric and decision rule where applicable.
 
-| Rung | Example | Pass idea |
-|------|---------|-----------|
-| Chance / bias | Uniform random; majority class; predict train mean | Metrics ≈ this → model not learning signal |
-| Linear / shallow | LogReg, linear probe, small GBM | Beats chance on val; establishes feature usefulness |
-| Simple net | Small CNN/MLP, default YOLO size, tiny Transformer | Beats linear; training dynamics healthy |
-| Human-rough | Spot labels on a fixed sample | Catches label/task misspecification |
-| Heavier / pretrained / custom SSL | Larger backbones, heavy aug, exotic pretrain | Only after lower rungs and `verify-training` |
+| Comparator | Example | What it tells you |
+|------------|---------|-------------------|
+| No-signal reference | Random predictor, training-set majority class or mean | Puts the score in context. A tie calls for inspecting the model, labels and metric. |
+| Linear or shallow model | Logistic regression, frozen-feature linear probe, small boosted tree | Tests how much the features explain with a simple model. If performance is comparable, extra complexity needs a separate justification. |
+| Small neural model | Small CNN, MLP or Transformer on a verified pipeline | Tests whether the data and objective support useful learning before a more expensive model comparison. |
+| Standard pretrained model | Frozen probe, partial or direct fine-tune | Establishes what a routine transfer recipe can achieve when the checkpoint is a good fit. |
+| Incumbent or human check | Current production rule or human review of fixed cases | Anchors deployment utility. A rough human spot-check can also expose ambiguous labels or an impossible task. |
 
 ## Classical ML
 
-Same ladder: chance → simple linear/tree → tuned ensembles. Skip neural-specific rungs; do not skip chance/majority.
+Linear or shallow tree models are useful references for a tuned ensemble. A no-signal reference helps interpret metrics that may look strong under imbalance.
 
-## Foundation models
+## Pretrained models
 
-Starting from a standard pretrained checkpoint counts as “simple net” if the head/train recipe is minimal. Custom SSL from scratch remains a high rung.
+A small in-domain image dataset can start with a frozen encoder and linear head. In multispectral imagery, check channel compatibility and preprocessing. Compare an adapted compatible checkpoint with a small native-channel model when the domain gap matters. Establish a standard supervised or transfer reference before investing in custom pretraining if either is credible for the task.
