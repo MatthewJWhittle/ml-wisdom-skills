@@ -17,7 +17,7 @@ license: MIT
 
 ## Decision tree
 
-``
+```
 verify-training failed with augs ON?
   → turn augs OFF; re-run gates; fix pipeline/labels
 
@@ -29,7 +29,7 @@ val gaps look like domain/lighting/pose?
 
 task has asymmetries (text, laterality, medical L/R)?
   → ban or constrain geometric flips/rotations
-``
+```
 
 ## Families
 

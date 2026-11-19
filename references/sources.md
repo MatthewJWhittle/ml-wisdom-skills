@@ -6,6 +6,8 @@ Enduring ML/DL judgment this pack cites. Prefer primary sources; skill bodies ke
 
 - [A Recipe for Training Neural Networks](https://karpathy.github.io/2019/04/25/recipe/) — Andrej Karpathy (2019). Become one with the data; baselines; overfit a tiny batch; verify loss at init; visualize before the model; one complexity at a time.
 - [Yes you should understand backprop](https://karpathy.github.io/2016/09/01/critic/) — Andrej Karpathy (2016). Gradient intuition as a debugging lens.
+- [Understanding deep learning requires rethinking generalization](https://arxiv.org/abs/1611.03530) — Zhang et al. (ICLR 2017). Networks can fit training data with random labels or fixed random inputs.
+- [CS231n: Learning and Evaluation](https://cs231n.github.io/neural-networks-3/) — initial-loss sanity checks and numerical gradient checks.
 - [A Recipe for Training Neural Networks (HN / discussion archives)](https://news.ycombinator.com/item?id=19752276) — community caveats on recipe age.
 
 ## Nuance (post-2019)

@@ -1,25 +1,25 @@
 # Init loss notes
 
-Quick expectations for `verify-training` gate 3. Custom losses need a human-stated target.
+Check the loss before the first update. Use the intended head and target contract, including weights, masking, smoothing and reduction. For custom or composite objectives, check individual terms on a small example with an independently calculated expectation.
 
 ## Classification (softmax CE)
 
-- Balanced C-way at random init: loss ≈ `ln(C)` = `-log(1/C)`.
-- Far above: logit explosion, wrong reduction (`sum` vs `mean`), label smoothing surprise, class weights mis-applied.
-- Far below: leak, wrong labels, evaluating train after accidental steps, or head initialized to priors too hard.
+- Equal logits across `C` classes give `ln(C)` per valid example with normalized targets and ordinary unweighted mean reduction. Class balance alone does not determine this value. Prior-biased or widely spread logits change it.
+- For an unexpected loss, inspect logit scale, class weights, targets, and sum versus mean reduction. For an unexpectedly low loss, also check whether a pretrained or already-updated checkpoint was loaded.
 
 ## Binary BCE with logits
 
-- Around `ln(2)` ≈ 0.693 for balanced data at zero logits.
+- Zero logits give `ln(2)` ≈ 0.693 per entry before weighting. Check positive weighting, masking and which entries the reduction averages.
+- With 90% positives and predictions initialized to that prior, mean unweighted BCE on a batch with the same prevalence is about 0.325. This is consistent with the intended head initialization.
 
 ## Regression (MSE / L1)
 
-- Compare to predicting train mean / median (baseline ladder). Init MSE much worse than mean-predictor → check target scaling.
+- Compare to a constant prediction based on the training mean for MSE or median for MAE. Score on the same batch with the same reduction. Inspect target scaling if initial error is unexpectedly high.
 
 ## Detection / dense tasks
 
-- Use the framework’s known init behavior (Ultralytics/HF tool skills). Prefer “finite, stable, not orders-of-magnitude off a fresh official recipe run” over a hand formula.
+- Check each term against the valid elements, anchors or pixels and the denominator used. Compare with a small hand-computable case or a known-good run with the same objective and settings.
 
 ## Generative LM
 
-- Init NLL should be near `-log(1/V)` for uniform-over-vocab (adjusted for BPE). Gate 5 (noise inputs) is often skipped with an explicit note.
+- Uniform logits give `ln(V)` per unmasked token for ordinary mean negative log-likelihood, where `V` is vocabulary size. For pretrained heads, use the actual logits.

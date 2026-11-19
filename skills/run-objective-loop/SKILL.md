@@ -78,9 +78,9 @@ and move on.
 
 ## 4. Keep rule (multi-signal)
 
-``
+```
 keep ⇔ primary_improved ∧ ¬any_guardrail_failed
-``
+```
 
 Primary-only wins that trip [things-to-watch](../../references/things-to-watch.md)
 items named as guardrails in `program.md` are discards. Complexity: prefer
@@ -94,9 +94,9 @@ worse; precision/recall at the real threshold worse; mosaic seams worse; human
 
 Header (see [template](../../templates/results.tsv)):
 
-``
+```
 commit	primary	guardrails	status	hypothesis	change	interpretation	rationale	description
-``
+```
 
 | Field | Content |
 |-------|---------|

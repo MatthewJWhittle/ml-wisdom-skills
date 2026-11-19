@@ -11,11 +11,11 @@ Shared failure modes for ML/DL judgment skills. Use as a scan list when a gate f
 
 ## Training correctness
 
-- Loss at init wildly off theory (wrong reduction, logit scale, class weights)
-- Augmentation on during a correctness gate
-- Unfixed seeds when claiming reproducibility
-- “Training” that never decreases train loss
-- Tiny-batch overfit that fails → bug; that succeeds → permission to scale
+- Initial loss inconsistent with the intended objective, weights, masks, or reduction
+- Stochastic augmentation varying inputs or targets during an isolated fit probe
+- Claiming reproducibility from a fixed seed without checking repeated runs
+- Loss or updates diverge from the expected behavior for the objective and schedule
+- Interpreting tiny-batch fit without checking the attainable loss or treating memorization as generalization
 
 ## Experiment process
 
