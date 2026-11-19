@@ -4,7 +4,7 @@ For a consequential comparison, record a few lines in the experiment log:
 
 - **Claim and population** — what quantity the metric estimates and for which deployment cases.
 - **Units and splits** — prediction unit, independent sampling or grouping unit, and which data served training, selection and final evaluation.
-- **Comparison** — baseline and candidate on the same cases where possible. Record budget, preprocessing, deployment threshold and relevant guards or whole-product checks.
+- **Comparison** — baseline and candidate on the same cases where possible. Record budget, inference preprocessing, deployment threshold, calibration when scores are used as confidence, and relevant guardrails or whole-product checks.
 - **Uncertainty** — report variation across seeds or splits if it matters. Use intervals when sample size and dependence assumptions support them. For paired differences, resample matched cases or groups together. Explain how much evidence the smallest important slices supply.
 - **Interpretation** — state whether the comparison is inconclusive, an exploratory improvement on selection data, or a supported improvement within the measured scope.
 

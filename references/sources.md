@@ -10,11 +10,16 @@ Enduring ML/DL judgment this pack cites. Prefer primary sources; skill bodies ke
 
 - [Google Deep Learning Tuning Playbook](https://developers.google.com/machine-learning/guides/deep-learning-tuning-playbook/scientific) — scientific, nuisance and fixed hyperparameters.
 - [Google ML Problem Framing](https://developers.google.com/machine-learning/problem-framing/problem-framing) — connect prediction tasks, outputs and success criteria.
+- [Cross-validation strategies for structured data](https://www.biom.uni-freiburg.de/mitarbeiter/dormann/roberts-et-al-2017-ecography.pdf/at_download/file) — Roberts et al. on matching blocked evaluation to dependence and the prediction task.
 
 ## Nuance (post-2019)
 
 - Unsupervised / self-supervised pretraining skepticism in the 2019 recipe is **more nuanced in 2024+**: foundation models and SSL often win when labeled data is scarce. Still: do **not** chase exotic unsupervised schemes before a supervised (or fine-tune) baseline and a working feedback map.
 - Autoresearch / run-objective-loop patterns: keep a durable `EXPERIMENTS.md` log and explicit mutable surface; do not reduce judgment to a single blind metric.
+
+## Worked examples
+
+- [Finite-Sample Equivalence in Statistical Models for Presence-Only Data](https://pmc.ncbi.nlm.nih.gov/articles/PMC4258396/) — Fithian and Hastie on what presence/background observations support under sampling bias.
 
 ## Compose with (tool skills, not this repo)
 

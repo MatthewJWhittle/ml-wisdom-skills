@@ -37,6 +37,8 @@ Use a frozen probe when data is scarce, compute is tight or you need to measure 
 5. Only then try architecture heroics
 ``
 
+The staged recipe applies when gradual unfreezing helps. For a direct fine-tune, assess its result against a credible comparator before increasing complexity.
+
 Details: [references/finetune-recipe.md](references/finetune-recipe.md).
 
 ## LR & init tips

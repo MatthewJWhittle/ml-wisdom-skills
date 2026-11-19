@@ -19,7 +19,7 @@ Suggested next skill by situation (judgment pack):
 | Feedback wiring missing/stale | `wire-feedback` |
 | New/changed data or labels | `audit-data` (+ `cv-data-quality` for vision) |
 | Planning a run / many knobs | `design-experiment` |
-| Choosing loss / objective | `design-loss` *(if installed)* |
+| Choosing loss / objective | `design-learning-objective` *(if installed)* |
 | Choosing model family | `choose-architecture` *(if installed)* |
 | Before long train / new loop | `verify-training` |
 | Training looks sick | `diagnose-training` |

@@ -13,7 +13,7 @@ Leave a short **task → supervision → head → loss → evaluation** contract
 
 1. **Define the prediction.** Name the population, prediction unit, available inputs at inference and decision or quantity the output should represent.
 2. **Trace the labels.** Say how examples were observed and labeled, which negatives were actually observed and which labels are unknown. Identify sampling bias, plausible shortcuts and the assumptions connecting labels to the desired target. Where the target is unsupported, narrow the claim or propose independent data that could test it.
-3. **Choose a defensible baseline objective.** Specify prediction shape and logits or probabilities, target encoding, masks, sampling or class weights, and reduction. State what a prediction change rewards. For custom or composite terms, reason through direction, relative gradient scales and an edge case such as an empty mask before choosing weights.
+3. **Choose a defensible baseline objective.** Specify prediction shape and logits or probabilities, target encoding, masks, sampling or class weights, and reduction. State what a prediction change rewards. For custom or composite terms, reason through direction, relative gradient scales and an edge case such as an empty mask before choosing weights. Give `verify-training` an expected initial loss or a hand-checkable case for each relevant term.
 4. **Specify evaluation separately.** Name the metric and guardrails tied to the deployment decision and the independent evidence that could disconfirm the formulation. Record expected limits and the cheapest comparison.
 
 Examples:

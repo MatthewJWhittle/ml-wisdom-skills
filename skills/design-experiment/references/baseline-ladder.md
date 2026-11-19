@@ -1,10 +1,19 @@
 # Baseline options
 
-Choose comparators that answer the study question. A baseline ladder is a menu of increasingly capable references.
+Use with `design-experiment`. Pick the smallest set that can answer the question. For each comparator, name what it controls and what its result would change. Use the same held-out cases, metric and decision rule where applicable.
 
-- **Input-independent reference** such as a train-set prior, mean or seasonal rule to calibrate the score.
-- **Simple learned model** such as a linear model, shallow trees, or a small network to check whether extra complexity buys anything.
-- **Standard pretrained model** with a linear probe or straightforward fine-tune when existing representations are relevant.
-- **Incumbent or human comparator** when deployment value is the question. Measure on comparable cases with the same decision and scoring rules.
+| Comparator | Example | What it tells you |
+|------------|---------|-------------------|
+| No-signal reference | Random predictor, training-set majority class or mean | Puts the score in context. A tie calls for inspecting the model, labels and metric. |
+| Linear or shallow model | Logistic regression, frozen-feature linear probe, small boosted tree | Tests how much the features explain with a simple model. If performance is comparable, extra complexity needs a separate justification. |
+| Small neural model | Small CNN, MLP or Transformer on a verified pipeline | Tests whether the data and objective support useful learning before a more expensive model comparison. |
+| Standard pretrained model | Frozen probe, partial or direct fine-tune | Establishes what a routine transfer recipe can achieve when the checkpoint is a good fit. |
+| Incumbent or human check | Current production rule or human review of fixed cases | Anchors deployment utility. A rough human spot-check can also expose ambiguous labels or an impossible task. |
 
-A small photo dataset may justify comparing a frozen pretrained encoder plus linear head with the incumbent. In multispectral imagery, check the checkpoint's channel and preprocessing contract. A compatible pretrained model with partial fine-tuning or a small native-channel model may be the more credible reference. State what each comparison controls and why further baselines would add little within the budget.
+## Classical ML
+
+Linear or shallow tree models are useful references for a tuned ensemble. A no-signal reference helps interpret metrics that may look strong under imbalance.
+
+## Pretrained models
+
+A small in-domain image dataset can start with a frozen encoder and linear head. In multispectral imagery, check channel compatibility and preprocessing. Compare an adapted compatible checkpoint with a small native-channel model when the domain gap matters. Establish a standard supervised or transfer reference before investing in custom pretraining if either is credible for the task.
