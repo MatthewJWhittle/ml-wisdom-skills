@@ -32,6 +32,7 @@ verify-training                cv-error-analysis
 diagnose-training
 validate-results
 run-objective-loop
+design-learning-objective
 ```
 
 Consumer artifacts:
@@ -46,7 +47,7 @@ Consumer artifacts:
 ## Principles
 
 1. **Verification before complexity** — overfit tiny batch, loss@init, baselines before architecture search.
-2. **One change at a time** — hypothesis → experiment → keep/discard.
+2. **Interpretable evidence** — control confounders and distinguish exploration from confirmation.
 3. **Multi-signal judgment** — primary metric + guardrails (see `references/things-to-watch.md`).
 4. **Compose, don’t compete** — point at tool packs for CLI/Hub work.
 5. **Cite sources; don’t duplicate encyclopedias** — progressive disclosure + external links.

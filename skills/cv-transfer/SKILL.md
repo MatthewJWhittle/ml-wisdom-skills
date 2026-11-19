@@ -6,7 +6,7 @@ license: MIT
 
 # CV transfer learning
 
-**Overlay** on `verify-training` and `design-experiment`. Load spines for correctness gates and one-change-at-a-time experiments; this skill for backbone/finetune policy. Compose with Hub/Ultralytics/torchvision weight loaders — do not invent exotic towers before a standard pretrained baseline works (“don’t be a hero,” [Karpathy recipe](https://karpathy.github.io/2019/04/25/recipe/)).
+**Overlay** on `verify-training` and `design-experiment`. Load spines for correctness checks and interpretable experiments; this skill for backbone/finetune policy. Compose with Hub/Ultralytics/torchvision weight loaders — do not invent exotic towers before a standard pretrained baseline works (“don’t be a hero,” [Karpathy recipe](https://karpathy.github.io/2019/04/25/recipe/)).
 
 Canonical framing: [CS231n transfer learning](https://cs231n.github.io/transfer-learning/).
 
@@ -25,7 +25,9 @@ Canonical framing: [CS231n transfer learning](https://cs231n.github.io/transfer-
 | Small, large domain gap | Freeze or partial freeze; probe earlier features; expect more data/aug need |
 | Large, large domain gap | Init from pretrained anyway; full finetune common; scratch only if justified |
 
-## Freeze → unfreeze recipe
+## Optional staged recipe
+
+Use a frozen probe when data is scarce, compute is tight or you need to measure feature reuse. Start with partial or full fine-tuning when features likely need adaptation and data and compute support it. For a large channel or domain shift, verify the checkpoint input contract first and consider a small native-channel comparator.
 
 ``
 1. Replace head for task; freeze backbone
@@ -53,7 +55,7 @@ Details: [references/finetune-recipe.md](references/finetune-recipe.md).
 
 - Chosen backbone + freeze/unfreeze stage stated and logged.
 - Norm/resize contract matches weights (or waiver).
-- Head-only then unfreeze path tried before custom architectures.
+- Starting freeze policy and credible comparators justified for the data, domain gap and budget.
 
 ## Out of scope
 

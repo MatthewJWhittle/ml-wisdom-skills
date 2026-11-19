@@ -8,6 +8,9 @@ Enduring ML/DL judgment this pack cites. Prefer primary sources; skill bodies ke
 - [Yes you should understand backprop](https://karpathy.github.io/2016/09/01/critic/) — Andrej Karpathy (2016). Gradient intuition as a debugging lens.
 - [A Recipe for Training Neural Networks (HN / discussion archives)](https://news.ycombinator.com/item?id=19752276) — community caveats on recipe age.
 
+- [Google Deep Learning Tuning Playbook](https://developers.google.com/machine-learning/guides/deep-learning-tuning-playbook/scientific) — scientific, nuisance and fixed hyperparameters.
+- [Google ML Problem Framing](https://developers.google.com/machine-learning/problem-framing/problem-framing) — connect prediction tasks, outputs and success criteria.
+
 ## Nuance (post-2019)
 
 - Unsupervised / self-supervised pretraining skepticism in the 2019 recipe is **more nuanced in 2024+**: foundation models and SSL often win when labeled data is scarce. Still: do **not** chase exotic unsupervised schemes before a supervised (or fine-tune) baseline and a working feedback map.

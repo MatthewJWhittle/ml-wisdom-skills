@@ -1,19 +1,10 @@
-# Baseline ladder (detail)
+# Baseline options
 
-Use with `design-experiment`. Each rung is a **gate**: beat it (or waive) before climbing.
+Choose comparators that answer the study question. A baseline ladder is a menu of increasingly capable references.
 
-| Rung | Example | Pass idea |
-|------|---------|-----------|
-| Chance / bias | Uniform random; majority class; predict train mean | Metrics ≈ this → model not learning signal |
-| Linear / shallow | LogReg, linear probe, small GBM | Beats chance on val; establishes feature usefulness |
-| Simple net | Small CNN/MLP, default YOLO size, tiny Transformer | Beats linear; training dynamics healthy |
-| Human-rough | Spot labels on a fixed sample | Catches label/task misspecification |
-| Heavier / pretrained / custom SSL | Larger backbones, heavy aug, exotic pretrain | Only after lower rungs and `verify-training` |
+- **Input-independent reference** such as a train-set prior, mean or seasonal rule to calibrate the score.
+- **Simple learned model** such as a linear model, shallow trees, or a small network to check whether extra complexity buys anything.
+- **Standard pretrained model** with a linear probe or straightforward fine-tune when existing representations are relevant.
+- **Incumbent or human comparator** when deployment value is the question. Measure on comparable cases with the same decision and scoring rules.
 
-## Classical ML
-
-Same ladder: chance → simple linear/tree → tuned ensembles. Skip neural-specific rungs; do not skip chance/majority.
-
-## Foundation models
-
-Starting from a standard pretrained checkpoint counts as “simple net” if the head/train recipe is minimal. Custom SSL from scratch remains a high rung.
+A small photo dataset may justify comparing a frozen pretrained encoder plus linear head with the incumbent. In multispectral imagery, check the checkpoint's channel and preprocessing contract. A compatible pretrained model with partial fine-tuning or a small native-channel model may be the more credible reference. State what each comparison controls and why further baselines would add little within the budget.

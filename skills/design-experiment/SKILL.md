@@ -1,103 +1,34 @@
 ---
 name: design-experiment
 description: >-
-  Enforces hypothesis-driven ML experiments, one change at a time, baseline
-  ladder, and keep/discard thinking before tuning or scaling complexity. Use
-  when planning runs, tempted to change many knobs, skipping baselines, or
-  starting an objective loop. Trigger terms: baseline ladder, one complexity at
-  a time, hypothesis, keep/discard, mutable surface, when not to tune.
+  Plans interpretable ML probes, fair scientific comparisons and performance
+  tuning. Use when planning runs, choosing baselines or deciding which
+  variables to change or control.
 license: MIT
 ---
 
 # design-experiment
 
-Run experiments like a skeptic with a lab notebook: **hypothesis → one change → measure → keep/discard**. Climb the **baseline ladder**; turn the complexity dial one click at a time.
+Start with the decision the evidence should support. Read the feedback map for commands, splits, primary signal and guardrails. If a needed signal is missing, use `wire-feedback` to expose it. Resolve data or training correctness failures before tuning.
 
-Compose with MLflow/W&B/HF tool skills for logging APIs. Reread `AGENTS-FEEDBACK.md` for signals; do not invent metrics.
+## Choose the study
 
-## Gate: hypothesis + single change + ladder position
+| Goal | Design |
+|------|--------|
+| Diagnose a failure | Change one factor where possible and predict the observable result. Reproduce the failure with the cheapest relevant probe. Use `verify-training` or `diagnose-training` when appropriate. |
+| Compare scientific alternatives | Name the **scientific variable** of interest, **nuisance variables** that may need separate tuning for a fair comparison, and **fixed variables** held constant. Give alternatives comparable search budgets and evaluate them by the same protocol. If budget forces a nuisance variable to stay fixed, scope the conclusion to that setting. |
+| Optimize performance | Set a search budget, allowed changes, primary signal and guardrails. Explore jointly when useful, record each configuration and confirm promising results under the chosen evaluation protocol. The winning bundle supports a configuration choice. Isolating the effect of a component requires a separate comparison. |
 
-**Pass**: written hypothesis; exactly one intentional change (or an explicit bundle the human approved); current step on the baseline ladder named; keep/discard rule tied to a **primary signal** (and known **guardrails**).  
-**Waiver**: human accepts multi-change exploration in writing (time-box it; still log).
+## Pick credible comparators
 
-## Baseline ladder
+Pick the smallest baseline set that could change the decision. Explain the chosen controls and any plausible comparator omitted. See [baseline options](references/baseline-ladder.md). Ordinary baseline choices need a rationale and a traceable configuration.
 
-Climb in order; do not skip unless waived:
+## Run and interpret
 
-1. **Chance / bias** — random or majority-class / mean predictor
-2. **Linear / shallow** — logistic/linear, tiny GBM, linear probe on frozen features
-3. **Simple net** — small MLP/CNN/Transformer with defaults
-4. **Human-rough** — spot-check: would a person beat this on a sample?
-5. **Heavier model / pretrain / exotic SSL** — only after lower rungs clear
+Write a short plan in the experiment log or run description. Include the question and expected observations, candidate configurations and allowed changes, controls and budget, split and signals, and the decision the evidence could support. Example:
 
-**2019 recipe nuance**: skepticism of unsupervised pretrain is softer in 2024+ foundation-model land — fine-tuning a known pretrained model can be the right “simple net.” Still: do **not** chase custom exotic unsupervised schemes before a supervised or standard fine-tune baseline and a working feedback map.
+> CNN vs ViT. Architecture is the scientific variable; learning rate is a nuisance variable. Give each architecture three plausible learning rates and the same training and evaluation budget. Hold data, splits and metric fixed. Compare the selected candidates on untouched data if available. With only one shared learning rate, report the comparison at that rate. For a NaN after a precision change, rerun the same batch and seed with only precision changed and inspect the first nonfinite tensor.
 
-## Steps
+Record the commands, configs and results in `EXPERIMENTS.md`. State what happened, what it supports and what remains uncertain. For evaluation and claims, use `validate-results`. If the target or loss is in question, use `design-learning-objective`. For bounded keep/discard execution, hand the plan to `run-objective-loop`.
 
-### 1. Read the feedback map
-
-Open `AGENTS-FEEDBACK.md`. If missing/stale → run `wire-feedback` first.
-
-**Done when**: primary + guardrail signals are named for this experiment.
-
-### 2. State hypothesis and mutable surface
-
-Write:
-
-- **Hypothesis**: what should improve and why
-- **Mutable surface**: files/knobs allowed to change; what is forbidden (raw data, unrelated packages, silent split edits)
-- **Keep rule**: primary signal threshold or comparison to baseline
-- **Discard rule**: revert when primary fails or a guardrail trips
-
-**Done when**: another agent could execute the run without asking “what are we testing?”
-
-### 3. One change at a time
-
-Make a single intentional delta (LR **or** aug **or** architecture width — not all three).
-
-If debugging correctness, prefer `verify-training` gates before any tuning.
-
-**Done when**: `git diff` (or equivalent) matches the claimed change.
-
-### 4. When NOT to tune
-
-Stop and fix foundations instead of sweeping hyperparameters when:
-
-- Train loss does not decrease (correctness)
-- Data audit is **no-go** (`audit-data`)
-- Feedback too coarse to tell keep from discard
-- You are below the ladder rung you are pretending to optimize
-
-**Done when**: you either tune with a clean ladder position or switch to a foundation fix.
-
-### 5. Run, record, keep/discard
-
-Measure via the feedback map. Append an entry to `EXPERIMENTS.md` (not `AGENTS-FEEDBACK.md`).
-
-- **Keep**: land the change; note why signals support it
-- **Discard**: revert; note what you learned
-
-For autonomous ratchets, point to an **objective loop** with `program.md` + `results.tsv` (goal, mutable surface, keep rules, append-only ledger). This skill sets discipline; the loop skill executes the ratchet.
-
-**Done when**: `EXPERIMENTS.md` entry exists; working tree matches keep/discard decision.
-
-## Complexity dial
-
-Increase only one of: data complexity, model capacity, training trickiness, or optimization difficulty — per experiment. Visualize and verify at each click (Karpathy).
-
-## Challenge stance
-
-- “Let’s switch backbone, LR schedule, and loss together” → split or get a waiver.
-- Tuning before majority/linear baselines → send back down the ladder.
-- Primary up, guardrail on fire → discard or waiver; do not celebrate.
-
-## Related
-
-- Shared traps: [`../../references/things-to-watch.md`](../../references/things-to-watch.md)
-- Ladder detail: [`references/baseline-ladder.md`](references/baseline-ladder.md)
-- Correctness before scale: `verify-training`
-
-## Sources
-
-- Karpathy, [A Recipe for Training Neural Networks](https://karpathy.github.io/2019/04/25/recipe/) — baselines; one complexity at a time; don’t get fancy early.
-- Pack sources: [`../../references/sources.md`](../../references/sources.md)
+Sources are in the [pack references](../../references/sources.md).

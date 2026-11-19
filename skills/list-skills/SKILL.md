@@ -25,11 +25,12 @@ Point the human at **one** next skill for their situation.
 |-------|------|-----------|
 | `wire-feedback` | Write short `AGENTS-FEEDBACK.md` router/config + scaffold `EXPERIMENTS.md` | New repo, stale wiring, agent can’t tell keep vs discard |
 | `audit-data` | Data go/no-go before modeling | New task, label/data change, results smell wrong |
-| `design-experiment` | Hypothesis, baseline ladder, one change | Planning runs, tempted to turn many knobs |
+| `design-experiment` | Diagnostic probes, fair comparisons and bounded tuning | Planning runs, tempted to turn many knobs |
 | `verify-training` | Correctness gates (init loss, tiny-batch overfit, …) | Before long trains / after pipeline changes |
 | `diagnose-training` | Ordered probes when training is sick | NaN, can’t overfit, train↓ val flat — before HP thrashing |
 | `validate-results` | Metrics + guardrails; catch “score good / use bad” | Choosing metrics; reading eval; overlays disagree with scores |
 | `run-objective-loop` | Scoped keep/discard ratchet + `program.md` / `results.tsv` | Bounded iteration toward a measurable goal |
+| `design-learning-objective` | Align task, supervision, head and loss | Choosing targets or objectives with uncertain assumptions |
 
 ## CV overlays
 
@@ -62,4 +63,4 @@ Point the human at **one** next skill for their situation.
 
 - Implementing other skills’ procedures
 - Hub/CLI how-tos (compose with HF / Ultralytics / etc.)
-- Proposed-but-unshipped skills (`audit-repo`, `design-loss`, …) — omit unless they exist under `skills/`
+- Proposed-but-unshipped skills (`audit-repo`, …) — omit unless they exist under `skills/`
