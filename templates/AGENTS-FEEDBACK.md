@@ -18,8 +18,9 @@ Suggested next skill by situation (judgment pack):
 | “What skills / where do I start?” | `list-skills` |
 | Feedback wiring missing/stale | `wire-feedback` |
 | New/changed data or labels | `audit-data` (+ `cv-data-quality` for vision) |
-| Planning a run / many knobs | `design-experiment` |
-| Choosing loss / objective | `design-learning-objective` *(if installed)* |
+| Clarifying what the ML system means or how it works | `clarify-ml-system` *(if installed)* |
+| Discussing prediction intent, labels or the learning objective | `design-learning-objective` *(if installed)* |
+| Planning an experiment, its controls and evidence | `design-experiment` |
 | Choosing model family | `choose-architecture` *(if installed)* |
 | Before long train / new loop | `verify-training` |
 | Training looks sick | `diagnose-training` |
