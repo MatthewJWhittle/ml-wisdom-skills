@@ -64,9 +64,13 @@ Hub/CLI trainers, YOLO pipelines, package encyclopedias — use [huggingface/ski
 
 ## Markdown maintenance
 
-Scan for accidental two-backtick fence lines with
-`rg -n '^\s*`{2}([[:alnum:]_-]+)?\s*$' README.md skills -g '*.md'`.
-Review matches before editing inline code. Fence lines use three backticks.
+From the repository root, scan tracked Markdown for accidental two-backtick fence lines.
+
+```bash
+git grep -n -E '^[[:space:]]*`{2}([[:alnum:]_-]+)?[[:space:]]*$' -- '*.md'
+```
+
+No matches is the expected result. Review any matches before editing inline code.
 
 ## License
 

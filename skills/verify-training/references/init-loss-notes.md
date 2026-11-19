@@ -1,16 +1,25 @@
-# Initial-loss expectations
+# Init loss notes
 
-Use the actual logits and target contract to check loss before the first update. Account for masks, weighting, smoothing, reduction and auxiliary terms. Inspect components separately for composite losses.
+Check the loss before the first update. Use the intended head and target contract, including weights, masking, smoothing and reduction. For custom or composite objectives, check individual terms on a small example with an independently calculated expectation.
 
-| Objective | Useful reference |
-|-----------|------------------|
-| Multiclass cross-entropy | Equal logits give `ln(C)` per valid example with normalized targets and ordinary unweighted mean reduction. Class balance is irrelevant for equal logits. Prior-biased or widely spread logits change that expectation. |
-| Binary or multilabel BCE with logits | Zero logits give `ln(2)` per entry before weighting. Positive weighting and sum reduction change the reported value. |
-| Regression | Compare a constant prediction from the training mean for MSE or median for MAE. Compare on the same batch and reduction, and inspect target scaling. |
-| Detection or dense prediction | Check each loss term against actual valid elements, anchors or pixels and its denominator. Inspect a small hand-computable case when the full expression is awkward. |
-| Next-token prediction | Uniform logits give `ln(V)` per unmasked token under ordinary mean NLL, where `V` is vocabulary size. Use the actual logits for pretrained heads. |
+## Classification (softmax CE)
 
-## Two interpretation checks
+- Equal logits across `C` classes give `ln(C)` per valid example with normalized targets and ordinary unweighted mean reduction. Class balance alone does not determine this value. Prior-biased or widely spread logits change it.
+- For an unexpected loss, inspect logit scale, class weights, targets, and sum versus mean reduction. For an unexpectedly low loss, also check whether a pretrained or already-updated checkpoint was loaded.
 
-- A network can memorize fixed noise assigned to training examples. If held-out performance matches the input-independent baseline, high training accuracy alone gives no evidence of leakage. If held-out skill persists, inspect group overlap and any target information that survived the control.
-- A binary model with 90% positives and logits initialized to the label prior has mean BCE near 0.325 on a representative batch, below the zero-logit baseline of 0.693. A tiny batch with smoothed labels also has a positive cross-entropy floor even at the optimum.
+## Binary BCE with logits
+
+- Zero logits give `ln(2)` ≈ 0.693 per entry before weighting. Check positive weighting, masking and which entries the reduction averages.
+- With 90% positives and predictions initialized to that prior, mean unweighted BCE on a batch with the same prevalence is about 0.325. This is consistent with the intended head initialization.
+
+## Regression (MSE / L1)
+
+- Compare to a constant prediction based on the training mean for MSE or median for MAE. Score on the same batch with the same reduction. Inspect target scaling if initial error is unexpectedly high.
+
+## Detection / dense tasks
+
+- Check each term against the valid elements, anchors or pixels and the denominator used. Compare with a small hand-computable case or a known-good run with the same objective and settings.
+
+## Generative LM
+
+- Uniform logits give `ln(V)` per unmasked token for ordinary mean negative log-likelihood, where `V` is vocabulary size. For pretrained heads, use the actual logits.
