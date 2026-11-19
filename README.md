@@ -28,6 +28,8 @@ npx skills add MatthewJWhittle/ml-wisdom-skills --skill verify-training
 | [`audit-data`](skills/audit-data/SKILL.md) | Inspect data before modeling |
 | [`design-experiment`](skills/design-experiment/SKILL.md) | Hypotheses, baselines, one change at a time |
 | [`verify-training`](skills/verify-training/SKILL.md) | Correctness gates (loss@init, overfit tiny batch, …) |
+| [`build-tiny-loop`](skills/build-tiny-loop/SKILL.md) | Build a fast, observable run using the real pipeline |
+| [`clarify-ml-system`](skills/clarify-ml-system/SKILL.md) | Build a shared glossary for the task, model, loss or training mechanism |
 | [`diagnose-training`](skills/diagnose-training/SKILL.md) | Decision trees when training is sick |
 | [`validate-results`](skills/validate-results/SKILL.md) | Metrics, slices, Goodhart guardrails |
 | [`run-objective-loop`](skills/run-objective-loop/SKILL.md) | Scoped ratchet iteration with reasoning traces |

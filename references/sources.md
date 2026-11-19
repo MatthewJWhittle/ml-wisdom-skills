@@ -4,6 +4,7 @@ Enduring ML/DL judgment this pack cites. Prefer primary sources; skill bodies ke
 
 ## Core
 
+- [Domain Modeling](https://github.com/mattpocock/skills/blob/main/skills/engineering/domain-modeling/SKILL.md) — Matt Pocock on testing shared terms against concrete scenarios and updating the project glossary as definitions are agreed.
 - [A Recipe for Training Neural Networks](https://karpathy.github.io/2019/04/25/recipe/) — Andrej Karpathy (2019). Become one with the data; baselines; overfit a tiny batch; verify loss at init; visualize before the model; one complexity at a time.
 - [Yes you should understand backprop](https://karpathy.github.io/2016/09/01/critic/) — Andrej Karpathy (2016). Gradient intuition as a debugging lens.
 - [Understanding deep learning requires rethinking generalization](https://arxiv.org/abs/1611.03530) — Zhang et al. (ICLR 2017). Networks can fit training data with random labels or fixed random inputs.
@@ -14,6 +15,10 @@ Enduring ML/DL judgment this pack cites. Prefer primary sources; skill bodies ke
 
 - Unsupervised / self-supervised pretraining skepticism in the 2019 recipe is **more nuanced in 2024+**: foundation models and SSL often win when labeled data is scarce. Still: do **not** chase exotic unsupervised schemes before a supervised (or fine-tune) baseline and a working feedback map.
 - Autoresearch / run-objective-loop patterns: keep a durable `EXPERIMENTS.md` log and explicit mutable surface; do not reduce judgment to a single blind metric.
+
+## Worked examples
+
+- [Finite-Sample Equivalence in Statistical Models for Presence-Only Data](https://pmc.ncbi.nlm.nih.gov/articles/PMC4258396/) — Fithian and Hastie on what presence/background observations support under sampling bias.
 
 ## Compose with (tool skills, not this repo)
 
