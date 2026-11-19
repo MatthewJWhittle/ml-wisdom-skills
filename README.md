@@ -26,14 +26,14 @@ npx skills add MatthewJWhittle/ml-wisdom-skills --skill verify-training
 |-------|------|
 | [`wire-feedback`](skills/wire-feedback/SKILL.md) | Wire how the agent observes success; write `AGENTS-FEEDBACK.md` |
 | [`audit-data`](skills/audit-data/SKILL.md) | Inspect data before modeling |
-| [`design-experiment`](skills/design-experiment/SKILL.md) | Diagnostic probes, fair comparisons, and bounded tuning |
+| [`design-experiment`](skills/design-experiment/SKILL.md) | Plan diagnostic probes, fair comparisons and bounded tuning |
 | [`verify-training`](skills/verify-training/SKILL.md) | Correctness gates (loss@init, overfit tiny batch, …) |
 | [`build-tiny-loop`](skills/build-tiny-loop/SKILL.md) | Build a fast, observable run using the real pipeline |
-| [`clarify-ml-system`](skills/clarify-ml-system/SKILL.md) | Build a shared glossary for the task, model, loss or training mechanism |
+| [`clarify-ml-system`](skills/clarify-ml-system/SKILL.md) | Clarify what an ML system means and how it works through dialogue |
 | [`diagnose-training`](skills/diagnose-training/SKILL.md) | Decision trees when training is sick |
 | [`validate-results`](skills/validate-results/SKILL.md) | Metrics, slices, Goodhart guardrails |
 | [`run-objective-loop`](skills/run-objective-loop/SKILL.md) | Scoped ratchet iteration with reasoning traces |
-| [`design-learning-objective`](skills/design-learning-objective/SKILL.md) | Align the target, supervision, head and loss |
+| [`design-learning-objective`](skills/design-learning-objective/SKILL.md) | Discuss prediction intent and label semantics to agree on an objective and evaluation |
 
 ### Computer vision overlays
 
