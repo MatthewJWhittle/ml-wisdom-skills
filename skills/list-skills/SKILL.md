@@ -25,14 +25,14 @@ Point the human at **one** next skill for their situation.
 |-------|------|-----------|
 | `wire-feedback` | Write short `AGENTS-FEEDBACK.md` router/config + scaffold `EXPERIMENTS.md` | New repo, stale wiring, agent can’t tell keep vs discard |
 | `audit-data` | Data go/no-go before modeling | New task, label/data change, results smell wrong |
-| `design-experiment` | Diagnostic probes, fair comparisons and bounded tuning | Planning runs, tempted to turn many knobs |
+| `design-experiment` | Plan probes, fair comparisons and bounded tuning | Choosing evidence, controls or budget before a run |
 | `verify-training` | Correctness gates (init loss, tiny-batch overfit, …) | Before long trains / after pipeline changes |
 | `build-tiny-loop` | Build a fast, observable run using the real pipeline | Need a cheap, rerunnable dev path |
-| `clarify-ml-system` | Build and update the project glossary | ML terms are ambiguous or disagree with code or observed behavior |
+| `clarify-ml-system` | Clarify the system through dialogue | Unclear target, score, model mechanism or training behavior |
 | `diagnose-training` | Ordered probes when training is sick | NaN, can’t overfit, train↓ val flat — before HP thrashing |
 | `validate-results` | Metrics + guardrails; catch “score good / use bad” | Choosing metrics; reading eval; overlays disagree with scores |
 | `run-objective-loop` | Scoped keep/discard ratchet + `program.md` / `results.tsv` | Bounded iteration toward a measurable goal |
-| `design-learning-objective` | Align task, supervision, head and loss | Choosing targets or objectives with uncertain assumptions |
+| `design-learning-objective` | Collaboratively design or review the learning objective | Prediction intent, label semantics, head or loss needs discussion |
 
 ## CV overlays
 
