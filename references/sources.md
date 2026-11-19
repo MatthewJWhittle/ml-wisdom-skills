@@ -4,6 +4,7 @@ Enduring ML/DL judgment this pack cites. Prefer primary sources; skill bodies ke
 
 ## Core
 
+- [Domain Modeling](https://github.com/mattpocock/skills/blob/main/skills/engineering/domain-modeling/SKILL.md) — Matt Pocock on testing shared terms against concrete scenarios and updating the project glossary as definitions are agreed.
 - [A Recipe for Training Neural Networks](https://karpathy.github.io/2019/04/25/recipe/) — Andrej Karpathy (2019). Become one with the data; baselines; overfit a tiny batch; verify loss at init; visualize before the model; one complexity at a time.
 - [Yes you should understand backprop](https://karpathy.github.io/2016/09/01/critic/) — Andrej Karpathy (2016). Gradient intuition as a debugging lens.
 - [A Recipe for Training Neural Networks (HN / discussion archives)](https://news.ycombinator.com/item?id=19752276) — community caveats on recipe age.

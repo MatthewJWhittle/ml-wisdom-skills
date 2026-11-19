@@ -1,21 +1,27 @@
 ---
 name: clarify-ml-system
 description: >-
-  Builds a shared explanation of what an ML task, model, loss or training
-  mechanism actually does. Use when terminology is ambiguous, an unfamiliar
-  mechanism needs explaining, or intended behavior conflicts with equations,
+  Builds and maintains a shared glossary for an ML system. Use when terms
+  such as target, negative or probability are ambiguous, an unfamiliar
+  mechanism needs explaining, or intended behavior conflicts with the math,
   code or observed predictions.
 license: MIT
 ---
 
 # clarify-ml-system
 
-Start with the claim or uncertainty the user wants to resolve. Ask one or two questions that would change the explanation, and let the answers guide which code, equations or observations to inspect. State ambiguous terms in concrete language and invite the user to check that meaning.
+Build a shared vocabulary the project can use in discussions, docs and reviews. Start with the user's current question and focus on the terms that change how people understand the system.
 
-1. **Describe one example end to end.** Use only the views needed: task and supervision, model transformations, objective and gradients, or training dynamics. Begin with the user-facing meaning. Add equations, tensor shapes or update steps where they resolve ambiguity.
-2. **Challenge the explanation.** Work through a small example and a counterexample: missing label, constant predictions, reversed ordering or a batch with no positives. Ask what the user expects when the prediction changes. Derive what the equation implies, trace what the implementation computes, and compare with observed behavior if a cheap check is available.
-3. **Reconcile differences.** Distinguish intent, mathematical expectations, implementation, and observations. Cite the relevant path, equation or run when available. Mark open assumptions and identify the smallest useful check when the evidence is missing or disagrees.
+1. **Find the glossary.** Reuse the project's existing glossary and follow any documented pointer for this model or context. If the project has no glossary, create `GLOSSARY.md` in the project root once the first definition is agreed.
+2. **Resolve an ambiguous term.** Compare how the user, glossary and code use it. If one word covers two concepts, propose a name for each. Ask one or two questions at a time and work through a concrete example and a boundary case. Use the model's inputs, targets, outputs or training behavior that matter to the question.
+3. **Ground the definition.** Inspect the relevant code, equations or run outputs where available. Distinguish what the user intends, what the math implies, what the code does and what has been observed. Surface discrepancies for the user to resolve. Keep unconfirmed meanings open and name the smallest check that would settle them.
+4. **Update the glossary as terms are agreed.** Write a short definition under each preferred term. Include a scope, contrast or example only when it disambiguates the term. Revise the existing entry when the meaning changes. Keep implementation details, experiment results and unresolved questions in the discussion or the project's existing notes.
 
-For example, a model trained on recorded sightings versus sampled background may score the contrast between those groups. Ask how observation effort and background sampling work before interpreting its output as a probability of presence. Trace target construction and loss, then check what happens to a location with no survey.
+For a model trained on recorded sightings and sampled background, ask how it labels a site that nobody surveyed. If the data pipeline confirms that background sites were sampled without verifying absence, two glossary entries might be:
 
-Close with a short conceptual model the user can correct: agreed terms, inputs and outputs, mechanism, evidence and unresolved assumptions. If the user wants it retained, update their existing project note or create one short note for this question. Carry the agreed target and assumptions into supervision and loss design. Use `diagnose-training` when the next step is debugging a run. See the [pack sources](../../references/sources.md).
+- **Recorded presence** — a site where the species was observed.
+- **Background site** — a site sampled for comparison without confirming whether the species is present or absent.
+
+Use those terms to check what the model's score represents before anyone calls it a probability of presence.
+
+At the end, show the glossary entries added or revised and any open terms. If there is no writable project, give the user glossary-ready entries in chat. Carry the agreed definitions into supervision and loss design, or use `diagnose-training` when the next step is debugging a run. See the [pack sources](../../references/sources.md).

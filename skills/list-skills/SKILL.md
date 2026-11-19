@@ -28,7 +28,7 @@ Point the human at **one** next skill for their situation.
 | `design-experiment` | Hypothesis, baseline ladder, one change | Planning runs, tempted to turn many knobs |
 | `verify-training` | Correctness gates (init loss, tiny-batch overfit, …) | Before long trains / after pipeline changes |
 | `build-tiny-loop` | Build a fast, observable run using the real pipeline | Need a cheap, rerunnable dev path |
-| `clarify-ml-system` | Build a shared conceptual model | Unsure what the system actually computes or learns |
+| `clarify-ml-system` | Build and update the project glossary | ML terms are ambiguous or disagree with code or observed behavior |
 | `diagnose-training` | Ordered probes when training is sick | NaN, can’t overfit, train↓ val flat — before HP thrashing |
 | `validate-results` | Metrics + guardrails; catch “score good / use bad” | Choosing metrics; reading eval; overlays disagree with scores |
 | `run-objective-loop` | Scoped keep/discard ratchet + `program.md` / `results.tsv` | Bounded iteration toward a measurable goal |
