@@ -1,25 +1,21 @@
 ---
 name: design-learning-objective
 description: >-
-  Aligns the prediction target, available supervision, output head and loss.
-  Use when framing a new prediction task, choosing a loss for weak or missing
-  labels, or checking a proposed head or composite objective before training.
+  Collaboratively design or review a learning objective when prediction
+  intent, label semantics, the head or the loss needs to be worked through.
 license: MIT
 ---
 
 # design-learning-objective
 
-Leave a short **task → supervision → head → loss → evaluation** contract with the assumptions and an alternative worth comparing.
+For design, explore the objective with the user. For review, explain what the current objective computes and flag any mismatch with stated intent. For an explicit implementation request with a sufficiently specified design, proceed within scope and ask only about consequential choices that remain open.
 
-1. **Define the prediction.** Name the population, prediction unit, available inputs at inference and decision or quantity the output should represent.
-2. **Trace the labels.** Say how examples were observed and labeled, which negatives were actually observed and which labels are unknown. Identify sampling bias, plausible shortcuts and the assumptions connecting labels to the desired target. Where the target is unsupported, narrow the claim or propose independent data that could test it.
-3. **Choose a defensible baseline objective.** Specify prediction shape and logits or probabilities, target encoding, masks, sampling or class weights, and reduction. State what a prediction change rewards. For custom or composite terms, reason through direction, relative gradient scales and an edge case such as an empty mask before choosing weights. Give `verify-training` an expected initial loss or a hand-checkable case for each relevant term.
-4. **Specify evaluation separately.** Name the metric and guardrails tied to the deployment decision and the independent evidence that could disconfirm the formulation. Record expected limits and the cheapest comparison.
+1. **Establish intent.** Read relevant task, sampling, label, head and loss code where available. Explain the current behavior in accessible language. Distinguish what is implemented, what the user wants and which alternatives are provisional.
+2. **Ask and stop.** For unresolved decisions that could change the objective, ask one or two targeted questions and end the turn. Wait for the actual reply before choosing among those alternatives. For example, “What should a high score mean at an unsurveyed site?” or “When a class label is missing, was the class checked and found absent, or was it left unassessed?” Use each answer to compare viable options and their assumptions. Say when the observations cannot identify the desired target.
+3. **Agree the objective in chat.** Walk through the relevant parts of **task → supervision → head → loss → evaluation** with the user. Summarise the agreed design, assumptions and open risks after resolving major choices.
 
-Examples:
+- **Task and supervision.** Establish the prediction unit, population, inference inputs and intended decision. Trace sampling and how labels are generated. Distinguish confirmed negatives from unknown labels and consider observation bias.
+- **Head and loss.** Match output shape and semantics to target encoding, masks, weighting and reduction as needed. Explain what an improved prediction rewards. For custom terms, reason through gradient direction, relative scale and edge cases such as an empty mask.
+- **Evaluation.** Tie metrics and guardrails to the deployment decision. Identify independent evidence that could challenge the objective, such as survey data for a claim of calibrated presence.
 
-- One mutually exclusive image label can use softmax cross-entropy. Multiple simultaneously valid labels need a head and loss that support co-occurrence, such as per-class logits with masked BCE when some labels are unknown.
-- Recorded sightings and sampled background may support ranking sightings against the sampled background. Unrecorded sites can be unsurveyed. To claim calibrated presence, justify the observation model and seek independent survey evidence.
-- For a binary mask, start with a pixel loss and check boundary quality at the deployment threshold. If adding a soft overlap term, check gradients, relative scale and behavior on empty masks. Overlap and usable boundaries can diverge.
-
-Hand the contract to `design-experiment` for comparison, `verify-training` for implementation probes and `validate-results` for the evaluation claim. See the [pack sources](../../references/sources.md).
+Keep design and review read-only. Agreement alone does not authorise edits to code, documentation, labels or evaluation, or a training run. Use `verify-training` or `build-tiny-loop` for requested executable checks, `design-experiment` to plan comparisons, and `validate-results` to assess evidence. See the [pack sources](../../references/sources.md).
