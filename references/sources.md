@@ -13,6 +13,10 @@ Enduring ML/DL judgment this pack cites. Prefer primary sources; skill bodies ke
 - Unsupervised / self-supervised pretraining skepticism in the 2019 recipe is **more nuanced in 2024+**: foundation models and SSL often win when labeled data is scarce. Still: do **not** chase exotic unsupervised schemes before a supervised (or fine-tune) baseline and a working feedback map.
 - Autoresearch / run-objective-loop patterns: keep a durable `EXPERIMENTS.md` log and explicit mutable surface; do not reduce judgment to a single blind metric.
 
+## Worked examples
+
+- [Finite-Sample Equivalence in Statistical Models for Presence-Only Data](https://pmc.ncbi.nlm.nih.gov/articles/PMC4258396/) — Fithian and Hastie on what presence/background observations support under sampling bias.
+
 ## Compose with (tool skills, not this repo)
 
 - Hugging Face Skills / Hub / `transformers` / Trainer workflows

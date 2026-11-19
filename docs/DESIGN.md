@@ -27,10 +27,10 @@ spine (verbs)                 overlays
 ─────────────────────          ────────
 wire-feedback                  cv-data-quality
 audit-data                     cv-augmentation
+design-experiment              cv-transfer
+verify-training                cv-error-analysis
 build-tiny-loop
-clarify-ml-system              cv-transfer
-design-experiment              cv-error-analysis
-verify-training
+clarify-ml-system
 diagnose-training
 validate-results
 run-objective-loop
