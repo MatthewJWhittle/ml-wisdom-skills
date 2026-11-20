@@ -9,14 +9,14 @@ license: MIT
 
 # clarify-ml-system
 
-Start with the user's question. Focus on the part of the task, outputs, architecture, loss, gradients or training dynamics that changes their understanding.
+Build shared clarity about what the system does. Start with the user's question. Focus on the part of the task, outputs, architecture, loss, gradients or training dynamics that changes their understanding.
 
 1. **Orient read-only.** When useful, inspect relevant code, equations, notes or existing run evidence. Explain the mechanism in plain English before going into technical detail unless the user asks for it. Distinguish intent, implementation, what the math predicts, what was observed and what is still unknown where those distinctions matter.
 2. **Ask and stop.** Ask one or two questions whose answers could materially change the interpretation. End the turn after asking and wait for the user's reply. Leave the choices open and keep the project untouched while waiting.
-3. **Build agreement.** Incorporate the answer, test the interpretation with a concrete example or edge case when useful, and ask the next one or two questions only if needed. Once the key meanings are agreed, summarise them in chat with relevant evidence links and any remaining uncertainty.
+3. **Build agreement.** Incorporate the answer, test the interpretation with a concrete example or edge case when useful, and ask the next one or two questions only if needed. Summarise the understanding, evidence and remaining uncertainty for the user. Once they agree, update the relevant glossary entry or system documentation in the repo.
 
-For sightings versus sampled background, ask whether background sites were checked for absence and what a high score should mean at an unsurveyed site. A score that distinguishes recorded sightings from sampled background does not by itself establish calibrated presence probability.
+For overlapping input chunks, trace whether the prediction can depend on context outside an individual chunk. Ask what behavior the user expects at the boundary if that changes the interpretation.
 
-File changes and experiments require an explicit request. Offer to save the agreed understanding after summarising it if a write hasn't already been requested. For an explicit, sufficiently specified request to document or implement an agreed decision, proceed directly within scope. Ask only about consequential choices that are still open.
+If the discussion exposes a design decision, capture the open question, evidence and why it matters so it can be taken into a separate grilling session or ticket. Code changes, experiments and opening tickets require an explicit request. Proceed directly on a sufficiently specified request.
 
 See the [pack sources](../../references/sources.md).
