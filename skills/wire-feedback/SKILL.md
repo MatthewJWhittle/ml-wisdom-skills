@@ -48,7 +48,7 @@ Find concrete **feedback sources** (commands, scripts, paths — not vibes):
 - For vision: ways to **see** predictions (overlays), not only a scalar
 - Boundary/edge metrics if sharp outlines matter; precision/recall at the **real
   deploy threshold** if you ship detection that way
-- If you **stitch tiles into a map**: a mosaic or seam check
+- If you **combine predictions into a larger output**: a check on the combined output or its boundaries
 - Optional: a short “what good enough means” rubric (a few lines + a fixed board)
 
 **Done when**: each source has a runnable invocation or an honest “missing.”
@@ -92,7 +92,7 @@ Create from template if missing. Do not invent fake historical experiments.
 Gaps must be specific (“add `scripts/plot_preds.py` for 16-val grid”), not “improve observability.”
 
 For vision, treat as a gap when you only have a number and **no** prediction
-overlay (or mosaic) command — numbers alone hide “looks fine / fails use”
+overlay (or combined-output review) command — numbers alone hide “looks fine / fails use”
 ([ADR 0010](../../docs/adr/0010-metric-utility-gap.md)).
 
 ### 6. Stop
