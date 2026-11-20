@@ -3,7 +3,7 @@ name: validate-results
 description: >-
   Chooses metrics and guardrails, checks slices and calibration, and catches
   cases where scores look good but the model fails real use (wrong metric for
-  the job, or scoring tiles/crops while shipping a stitched/whole product).
+  the job, or scoring individual parts while deploying a combined output).
   Use when picking or defending a primary metric, reading eval results, CV
   overlays disagree with Dice/mAP/accuracy, or handing off to cv-error-analysis.
 license: MIT
@@ -33,12 +33,12 @@ listing what is deferred.
 ## Choosing metrics
 
 1. Start from the **decision** the model supports (rank, threshold, draw a
-   boundary, map a field) — not from a leaderboard default.
+   boundary, assemble a document) — not from a leaderboard default.
 2. Under imbalance, prefer PR / cost-aware metrics when accuracy lies.
 3. One primary; list guardrails in the open — not “also glance at.”
 4. For thresholded deploy: report the **real operating point**. mAP can rise
    while precision/recall at that threshold falls.
-5. If you **score parts but ship a whole** (tiles→map, frames→track), add at
+5. If you **score parts but ship a whole** (pages → document, frames → track), add at
    least one check on the whole (or seams), not only per-part scores.
 
 More detail: [metric-and-slices.md](references/metric-and-slices.md).
