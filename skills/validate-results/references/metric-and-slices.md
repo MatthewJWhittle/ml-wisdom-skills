@@ -13,13 +13,13 @@ Ask: **what action changes if this number moves?**
 | Segmentation / detection | Standard IoU/AP **plus** slices |
 | Boundaries matter (organs, parcels, footprints) | Overlap (Dice/IoU) **and** a boundary/edge check — overlap alone forgives soft edges |
 | Detection you ship at one score | Operating-point PR **and** optional AP — not AP alone |
-| Tiles stitched into a map | Chip scores **and** a mosaic/AOI or seam check |
+| Parts combined into one output | Part scores **and** a check on the whole output or its boundaries |
 
 If stakeholders love a vanity metric, report it — but put the **decision**
 metric in the primary slot (or get a waiver).
 
 **Score looks good, use still fails:** when the job cares about edges, rare
-classes, real thresholds, or a stitched/whole product, a global Dice/mAP/accuracy
+classes, real thresholds, or a combined product, a global Dice/mAP/accuracy
 win is not enough without matching guardrails
 ([ADR 0010](../../../docs/adr/0010-metric-utility-gap.md)).
 
@@ -31,7 +31,7 @@ win is not enough without matching guardrails
 - “No critical slice worse than X vs baseline”
 - Boundary / edge-band / surface distance when contours matter
 - Precision/recall at the **deploy** threshold (detection)
-- Mosaic- or AOI-level score; disagreement on tile overlaps (tiled maps)
+- Whole-output score or cross-part consistency check (assembled documents, video tracks, stitched images)
 - Fail rate on a short human “good enough” rubric
 
 ## Slice checklist
