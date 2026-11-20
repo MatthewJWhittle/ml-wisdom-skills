@@ -1,27 +1,20 @@
 ---
 name: clarify-ml-system
 description: >-
-  Builds and maintains a shared glossary for an ML system. Use when terms
-  such as target, negative or probability are ambiguous, an unfamiliar
-  mechanism needs explaining, or intended behavior conflicts with the math,
-  code or observed predictions.
+  Collaboratively clarify what a specific ML system means or how it works.
+  Use for ambiguous targets or scores, unfamiliar model or loss mechanisms,
+  or discrepancies between intended and observed training behavior.
 license: MIT
 ---
 
 # clarify-ml-system
 
-Build a shared vocabulary the project can use in discussions, docs and reviews. Start with the user's current question and focus on the terms that change how people understand the system.
+Build shared clarity about what the system does. Start with the user's question. Focus on the part of the task, outputs, architecture, loss, gradients or training dynamics that changes their understanding.
 
-1. **Find the glossary.** Reuse the project's existing glossary and follow any documented pointer for this model or context. If the project has no glossary, create `GLOSSARY.md` in the project root once the first definition is agreed.
-2. **Resolve an ambiguous term.** Compare how the user, glossary and code use it. If one word covers two concepts, propose a name for each. Ask one or two questions at a time and work through a concrete example and a boundary case. Use the model's inputs, targets, outputs or training behavior that matter to the question.
-3. **Ground the definition.** Inspect the relevant code, equations or run outputs where available. Distinguish what the user intends, what the math implies, what the code does and what has been observed. Surface discrepancies for the user to resolve. Keep unconfirmed meanings open and name the smallest check that would settle them.
-4. **Update the glossary as terms are agreed.** Write a short definition under each preferred term. Include a scope, contrast or example only when it disambiguates the term. Revise the existing entry when the meaning changes. Keep implementation details, experiment results and unresolved questions in the discussion or the project's existing notes.
+1. **Orient read-only.** When useful, inspect relevant code, equations, notes or existing run evidence. Explain the mechanism in plain English before going into technical detail unless the user asks for it. Distinguish intent, implementation, what the math predicts, what was observed and what is still unknown where those distinctions matter.
+2. **Ask and stop.** Ask one or two questions whose answers could materially change the interpretation. End the turn after asking and wait for the user's reply. Leave the choices open and keep the project untouched while waiting.
+3. **Build agreement.** Incorporate the answer, test the interpretation with a concrete example or edge case when useful, and ask the next one or two questions only if needed. Summarise the understanding, evidence and remaining uncertainty for the user. Once they agree, update the relevant glossary entry or system documentation in the repo. If neither exists, create a short note in the appropriate location. If the request or workspace rules prevent a write, keep the agreed explanation in chat.
 
-For a model trained on recorded sightings and sampled background, ask how it labels a site that nobody surveyed. If the data pipeline confirms that background sites were sampled without verifying absence, two glossary entries might be:
+If the discussion exposes a design decision, capture the open question, evidence and why it matters so it can be taken into a separate grilling session or ticket. Code changes, experiments and opening tickets require an explicit request. Proceed directly on a sufficiently specified request.
 
-- **Recorded presence** — a site where the species was observed.
-- **Background site** — a site sampled for comparison without confirming whether the species is present or absent.
-
-Use those terms to check what the model's score represents before anyone calls it a probability of presence.
-
-At the end, show the glossary entries added or revised and any open terms. If there is no writable project, give the user glossary-ready entries in chat. Carry the agreed definitions into supervision and loss design, or use `diagnose-training` when the next step is debugging a run. See the [pack sources](../../references/sources.md).
+See the [pack sources](../../references/sources.md).

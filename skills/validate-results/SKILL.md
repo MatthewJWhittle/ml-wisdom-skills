@@ -3,7 +3,7 @@ name: validate-results
 description: >-
   Chooses metrics and guardrails, checks slices and calibration, and catches
   cases where scores look good but the model fails real use (wrong metric for
-  the job, or scoring tiles/crops while shipping a stitched/whole product).
+  the job, or scoring individual parts while deploying a combined output).
   Use when picking or defending a primary metric, reading eval results, CV
   overlays disagree with Dice/mAP/accuracy, or handing off to cv-error-analysis.
 license: MIT
@@ -11,7 +11,7 @@ license: MIT
 
 # validate-results
 
-Decide **what “better” means** and whether you can trust the number.
+Assess what the evaluation evidence supports for the intended use. Report where the conclusion holds, where it is uncertain and what evidence could resolve an important gap.
 
 Use the project’s eval scripts and trackers; this skill does not teach their CLIs.
 See [things-to-watch](../../references/things-to-watch.md) and
@@ -25,11 +25,7 @@ For vision failure patterns, also load `cv-error-analysis`.
 | **Primary** | The main keep/discard score for a loop or release |
 | **Guardrails** | Extra checks that can **veto** a primary win |
 
-**Keep rule:** if the primary improves but a named guardrail fails, that is **not**
-a keep. Examples: Dice/mAP/accuracy up, but boundaries look bad, the real deploy
-threshold looks worse, the stitched map has seams, or a human “good enough”
-rubric fails. Log the veto. See `run-objective-loop` and
-[program.md](../../templates/program.md).
+If the primary improves and a named guardrail fails, report the veto and explain which claim the evidence still supports. For example, an aggregate improvement can coexist with worse recall on a critical slice. Leave promotion, discard or revert actions to the agreed experiment or `run-objective-loop`.
 
 **Gate:** primary + guardrails written down (**pass**), or a **human waiver**
 listing what is deferred.
@@ -37,12 +33,12 @@ listing what is deferred.
 ## Choosing metrics
 
 1. Start from the **decision** the model supports (rank, threshold, draw a
-   boundary, map a field) — not from a leaderboard default.
+   boundary, assemble a document) — not from a leaderboard default.
 2. Under imbalance, prefer PR / cost-aware metrics when accuracy lies.
 3. One primary; list guardrails in the open — not “also glance at.”
 4. For thresholded deploy: report the **real operating point**. mAP can rise
    while precision/recall at that threshold falls.
-5. If you **score parts but ship a whole** (tiles→map, frames→track), add at
+5. If you **score parts but ship a whole** (pages → document, frames → track), add at
    least one check on the whole (or seams), not only per-part scores.
 
 More detail: [metric-and-slices.md](references/metric-and-slices.md).
