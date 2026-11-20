@@ -13,7 +13,7 @@ license: MIT
 
 Check whether training behaves as intended and report what the evidence covers. Use cheap probes before a long run. Start from the user's question: an isolated fit can test whether an objective learns, while readiness to scale calls for a short check through the intended training path. Adapt the probes to the model and task.
 
-Compose with HF Trainer / Ultralytics / Lightning tool skills for the actual train commands. Use the project’s real training path for the checks below.
+Compose with HF Trainer / Ultralytics / Lightning tool skills for the actual train commands. Choose the checks that answer the user’s question. An isolated probe can answer a narrow question. For readiness to scale, run a short representative check through the project’s intended training path and settings.
 
 Reread `AGENTS-FEEDBACK.md` if present; use its eval commands when a gate needs a metric.
 
