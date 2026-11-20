@@ -16,4 +16,4 @@ Linear or shallow tree models are useful references for a tuned ensemble. A no-s
 
 ## Pretrained models
 
-A small in-domain image dataset can start with a frozen encoder and linear head. In multispectral imagery, check channel compatibility and preprocessing. Compare an adapted compatible checkpoint with a small native-channel model when the domain gap matters. Establish a standard supervised or transfer reference before investing in custom pretraining if either is credible for the task.
+A small in-domain image dataset can start with a frozen encoder and linear head. When the checkpoint expects different inputs, check preprocessing and compare a compatible adaptation with a small model trained on the target inputs if the gap matters. Establish a standard supervised or transfer reference before investing in custom pretraining if either is credible for the task.
