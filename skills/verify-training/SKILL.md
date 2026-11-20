@@ -11,7 +11,7 @@ license: MIT
 
 # verify-training
 
-Prove the training stack can learn **anything** before you burn GPU hours. Default context: neural nets; adapt classical ML to “model fits toy data / loss moves the right way.”
+Check whether training behaves as intended and report what the evidence covers. Use cheap probes before a long run. Start from the user's question: an isolated fit can test whether an objective learns, while readiness to scale calls for a short check through the intended training path. Adapt the probes to the model and task.
 
 Compose with HF Trainer / Ultralytics / Lightning tool skills for the actual train commands. Use the project’s real training path for the checks below.
 
@@ -19,7 +19,9 @@ Reread `AGENTS-FEEDBACK.md` if present; use its eval commands when a gate needs 
 
 ## Master gate
 
-Fix demonstrated correctness failures before scaling. An applicable check that leaves a material correctness risk unresolved blocks scaling until a follow-up probe resolves it or a human explicitly waives that risk. Record the check and the accepted risk with the waiver. For an inapplicable check, record why and use an alternative if it addresses the same risk.
+Fix clear correctness bugs with an unambiguous, scoped repair and rerun affected checks. If the correction depends on a design choice, explain the alternatives and wait for the user. When a bug exposes a coverage gap, propose a small check that would catch it. Ask if adding a lasting check involves a material trade-off about what the user wants covered.
+
+For a readiness assessment, report which configuration was tested, what passed and what still blocks scaling. An applicable check that leaves a material correctness risk unresolved blocks scaling until a follow-up probe resolves it or a human explicitly waives that risk. Record the check and the accepted risk with the waiver. For an inapplicable check, record why and use an alternative if it addresses the same risk.
 
 When reporting a critical check in `EXPERIMENTS.md`, record the command or probe, batch or split, expected and observed results, and the artifact path when available. Use **PASS** for an observed match, **FAIL** for a demonstrated mismatch, **INCONCLUSIVE** for ambiguous evidence, **NOT_RUN** when an applicable check was skipped or blocked, and **N/A** when it does not apply. Keep a waiver alongside the observed status.
 
