@@ -61,6 +61,21 @@ Templates live in [`templates/`](templates/).
 | `program.md` | One objective-loop contract |
 | `results.tsv` | Per-run ledger + reasoning fields |
 
+
+## Stale installs
+
+The spine skill is **`wire-feedback`** (short `AGENTS-FEEDBACK.md` + `EXPERIMENTS.md`). Older installs may still have `feedback-setup` / “Try log inside AGENTS-FEEDBACK” under `~/.claude/skills/` or `~/.agents/skills/`.
+
+Remove those leftovers so agents do not rewrite consumer feedback maps:
+
+```bash
+rm -rf ~/.claude/skills/feedback-setup ~/.claude/skills/experiment-discipline
+# re-install from this repo if needed:
+npx skills add MatthewJWhittle/ml-wisdom-skills --skill wire-feedback
+```
+
+Consumer migration: move historical Try-log rows into `EXPERIMENTS.md`; keep `AGENTS-FEEDBACK.md` as wiring only (see juniper [#74](https://github.com/MatthewJWhittle/juniper/issues/74)).
+
 ## Not this repo
 
 Hub/CLI trainers, YOLO pipelines, package encyclopedias — use [huggingface/skills](https://github.com/huggingface/skills), [ultralytics/skills](https://github.com/ultralytics/skills), etc. See [`references/sources.md`](references/sources.md).
