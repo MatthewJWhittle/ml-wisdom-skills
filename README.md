@@ -66,11 +66,13 @@ Templates live in [`templates/`](templates/).
 
 The spine skill is **`wire-feedback`** (short `AGENTS-FEEDBACK.md` + `EXPERIMENTS.md`). Older installs may still have `feedback-setup` / “Try log inside AGENTS-FEEDBACK” under `~/.claude/skills/` or `~/.agents/skills/`.
 
-Remove those leftovers so agents do not rewrite consumer feedback maps:
+**Agents:** if you find those leftovers, **ask before deleting**. List the paths you found and wait for confirmation; do not `rm` skill directories unprompted.
+
+**Humans (after confirming):** remove the old skill dirs, then reinstall from this repo if needed:
 
 ```bash
+# only after you intend to drop these installs
 rm -rf ~/.claude/skills/feedback-setup ~/.claude/skills/experiment-discipline
-# re-install from this repo if needed:
 npx skills add MatthewJWhittle/ml-wisdom-skills --skill wire-feedback
 ```
 
